@@ -12,7 +12,9 @@ let quizzesArray = []
 
 /*FIM GLOBAIS*/
 
-
+function refresh() {
+    window.location.reload()
+}
 
 
 /*INÍCIO HOME*/
