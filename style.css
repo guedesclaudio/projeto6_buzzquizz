@@ -6,7 +6,7 @@
 /* 4° - Criação de quiz*/
 
 /*INÍCIO MAIN*/
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fafafa;
@@ -29,7 +29,6 @@ body {
     height: 69px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
 }
-
 /*FIM MAIN*/
 
 
@@ -122,8 +121,55 @@ body {
 
 
 /*INÍCIO QUIZ*/
-
-
+.quiz{
+    align-items: center;
+}
+.ImgTopoQuiz{
+    width: 100vw;
+    height: 227px;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 39px;
+    margin-top: 69px;
+    display: flex;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(hidef.jpg);
+    background-size: 100% 100%;
+    justify-content: center;
+    align-items: center;
+}
+.QeAQuiz{
+    margin-top: 60px;
+}
+.Pergunta{
+    background-color: gray;
+    width: 700px;
+    height: 140px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 20px;
+    font-size: 23px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.Resposta{
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 400;
+}
+.Resposta1, .Resposta2, .Resposta3, .Resposta4, .QeAQuiz, .RespostaColuna1, .RespostaColuna2, .quiz{
+    display: flex;
+    flex-direction: column;
+}
+.Resposta1, .Resposta2, .Resposta3, .Resposta4{
+    margin-bottom: 20px;
+}
+.imgresposta{
+    width: 330px;
+    height: 175px;
+    margin-bottom: 10px;
+}
 
 /*FIM QUIZ*/
 
@@ -137,4 +183,3 @@ body {
 /*FIM CRIAÇÃO*/
 
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
