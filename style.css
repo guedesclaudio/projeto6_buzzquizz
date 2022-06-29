@@ -1,0 +1,118 @@
+/*CSS organizado de acordo com ordem de aparição na página
+/*Sendo disposto com 
+/* 1° - main(body, banner topo, fontes, tudo que é comum a todo o projeto)
+/* 2° - Home page
+/* 3° - Tela do quiz
+/* 4° - Criação de quiz*/
+
+/*INÍCIO MAIN*/
+
+body {
+    height: 150vh;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bannerTopo {
+    width: 100vw;
+    position: absolute;
+    background-color: #ec362d;
+    font-size: 37px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 69px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+}
+
+/*FIM MAIN*/
+
+
+
+
+/*INÍCIO HOME*/
+
+.criarQuiz {
+    width: 70vw;
+    height: calc(0.16*70vw);
+    margin-top: 135px;
+    display: flex;
+    flex-direction: column;
+    border: dashed 1px #e5e5e5;
+    align-items: center;
+    justify-content: center;
+}
+
+.criarQuiz span {
+    color: #b9b9b9;
+    width: 20vw;
+    font-size: 20px;
+    text-align: center;
+    margin: calc(0.025*70vw) 0;
+}
+
+.criarQuiz button {
+    background-color: #fafafa;
+    color: #ec362d;
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 50px;
+    width: calc(0.14*70vw);
+    height: 60px;
+    border: dashed 1px #ec362d;
+    margin-bottom: calc(0.03*70vw)
+}
+
+.todosQuizzes {
+    margin-top: 70px;
+    width: 70vw;
+    height: auto;
+}
+
+.todosQuizzes span {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.quizzCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.quizzCard {
+    width: calc(0.32*70vw);
+    height: calc(0.19*70vw);
+    margin-top: 18px;
+    border-radius: 4px;
+    background-color: #ec362d
+}
+
+/*FIM HOME*/
+
+
+
+
+/*INÍCIO QUIZ*/
+
+
+
+/*FIM QUIZ*/
+
+
+
+
+/*INÍCIO CRIAÇÃO*/
+
+
+
+/*FIM CRIAÇÃO*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
