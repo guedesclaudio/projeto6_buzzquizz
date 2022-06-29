@@ -63,7 +63,8 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     toggleHome()
     document.querySelector('.quiz').innerHTML = `
         <div class="ImgTopoQuiz">
-            <h2>${quizzesArray[quizz.id].title}</h2>
+            <img class="ImagemQuizBanner" src="${quizzesArray[quizz.id].image}" alt="">
+            <h2 class="TituloQuizBanner">${quizzesArray[quizz.id].title}</h2>
         </div>
         <div class="QeAQuiz">
             <div class="Pergunta">
