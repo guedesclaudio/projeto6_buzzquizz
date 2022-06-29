@@ -85,20 +85,21 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
                         <img class="imgresposta" src="${RespostasArray[0].image}" alt="">
                         <span>${RespostasArray[0].text}</span>
                     </div>
+                </div>
+                <div class="RespostaColuna2">
                     <div class="Resposta2">
                         <img class="imgresposta" src="${RespostasArray[1].image}" alt="">
                         <span>${RespostasArray[1].text}</span>
                     </div>
                 </div>
+                
             </div>
         </div>`
         if(RespostasArray[2] !== undefined){
-            document.querySelector('.Resposta').innerHTML +=
-            `<div class="RespostaColuna2">
-                    <div class="Resposta3">
-                        <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
-                        <span>${RespostasArray[2].text}</span>
-                    </div>
+            document.querySelector('.RespostaColuna1').innerHTML +=
+                `<div class="Resposta3">
+                    <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
+                    <span>${RespostasArray[2].text}</span>
                 </div>`
         }
         if(RespostasArray[3] !== undefined){
