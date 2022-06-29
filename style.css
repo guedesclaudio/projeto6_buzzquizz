@@ -187,7 +187,7 @@ body {
     display: flex;
     justify-content: space-between;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 700;
 }
 .Resposta1, .Resposta2, .Resposta3, .Resposta4, .QeAQuiz, .RespostaColuna1, .RespostaColuna2, .quiz{
     display: flex;
@@ -201,8 +201,20 @@ body {
     height: 175px;
     margin-bottom: 10px;
 }
+.Resposta1:hover, .Resposta2:hover, .Resposta3:hover, .Resposta4:hover{
+    filter: contrast(85%);
+    cursor: pointer;
+}
+.esbranquicado{
+    opacity: 30%;
+}
+.acertou{
+    color: green;
+}
+.errou{
+    color: red;
 
-
+}
 /*FIM QUIZ*/
 
 
