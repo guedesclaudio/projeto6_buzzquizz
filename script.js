@@ -9,6 +9,7 @@
 
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
+let RespostasArray= []
 
 /*FIM GLOBAIS*/
 
@@ -38,14 +39,12 @@ function ObterQuizzes(){
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
 //elemento.data[i] === quizzesArray[i]
 function ObterQuizzesSucesso(elemento){
-    console.log(elemento)
     for(let i = 0; i < elemento.data.length; i++){
         quizzesArray.push(elemento.data[i])
         const quizzCardtemplate = `
         <div class="quizzCard" id="${i}" onclick="goToQuizz(this)">
             <img src=${elemento.data[i].image}>
             <span>${elemento.data[i].title}</span>
-
         </div>`
         document.querySelector('.quizzCards').innerHTML += quizzCardtemplate
     }
@@ -64,12 +63,11 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     // quizz.id === i
     toggleHome()
     //colocando as respostas em uma array e embaralhando a array para a ordem ficar aleatória
-    let RespostasArray= []
     for(let index= 0 ; index< quizzesArray[quizz.id].questions[0].answers.length ; index++){
         RespostasArray.push(quizzesArray[quizz.id].questions[0].answers[index])
     }
     RespostasArray.sort(comparador)
-
+    console.log(quizzesArray)
     document.querySelector('.quiz').innerHTML = `
         <div class="ImgTopoQuiz">
             <img class="ImagemQuizBanner" src="${quizzesArray[quizz.id].image}" alt="">
@@ -81,13 +79,13 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
             </div>
             <div class="Resposta">
                 <div class="RespostaColuna1">
-                    <div class="Resposta1">
+                    <div class="Resposta1" onclick="VerificarResposta(RespostasArray[0], this)">
                         <img class="imgresposta" src="${RespostasArray[0].image}" alt="">
                         <span>${RespostasArray[0].text}</span>
                     </div>
                 </div>
                 <div class="RespostaColuna2">
-                    <div class="Resposta2">
+                    <div class="Resposta2" onclick="VerificarResposta(RespostasArray[1], this)">
                         <img class="imgresposta" src="${RespostasArray[1].image}" alt="">
                         <span>${RespostasArray[1].text}</span>
                     </div>
@@ -97,19 +95,54 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
         </div>`
         if(RespostasArray[2] !== undefined){
             document.querySelector('.RespostaColuna1').innerHTML +=
-                `<div class="Resposta3">
+                `<div class="Resposta3" onclick="VerificarResposta(RespostasArray[2], this)">
                     <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
                     <span>${RespostasArray[2].text}</span>
                 </div>`
         }
         if(RespostasArray[3] !== undefined){
             document.querySelector('.RespostaColuna2').innerHTML +=
-            `   <div class="Resposta4">
+            `   <div class="Resposta4" onclick="VerificarResposta(RespostasArray[3], this)">
                     <img class="imgresposta" src="${RespostasArray[3].image}" alt="">
                     <span>${RespostasArray[3].text}</span>
                 </div>`
         }
 }
+//função para selecionar resposta e esbranquiçar as outras
+//e para verificar se a resposta ta certa ou errada
+function VerificarResposta(RespostaObjeto, elemento){ //verificar jeito melhor de fazer
+    if(elemento.classList.contains('esbranquicado') === false){
+        document.querySelector('.Resposta1').classList.add('esbranquicado')
+        document.querySelector('.Resposta2').classList.add('esbranquicado')
+        if(RespostasArray[2] !== undefined){
+            document.querySelector('.Resposta3').classList.add('esbranquicado')
+        }
+        if(RespostasArray[3] !== undefined){
+            document.querySelector('.Resposta4').classList.add('esbranquicado')
+        }
+        elemento.classList.remove('esbranquicado')
+    }
+    switch(true){
+        case RespostasArray[0].isCorrectAnswer:
+            document.querySelector('.Resposta1').classList.add('acertou')
+            document.querySelector('.Resposta').classList.add('errou')
+            break
+        case RespostasArray[1].isCorrectAnswer:
+            document.querySelector('.Resposta2').classList.add('acertou')
+            document.querySelector('.Resposta').classList.add('errou')
+            break
+        case RespostasArray[2].isCorrectAnswer:
+            document.querySelector('.Resposta3').classList.add('acertou')
+            document.querySelector('.Resposta').classList.add('errou')
+            break
+        case RespostasArray[3].isCorrectAnswer:
+            document.querySelector('.Resposta4').classList.add('acertou')
+            document.querySelector('.Resposta').classList.add('errou')
+            break
+    }
+   
+}
+
 /*FIM QUIZ*/
 
 
