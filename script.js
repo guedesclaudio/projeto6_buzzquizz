@@ -15,7 +15,9 @@ let quizzesArray = []
 function refresh() {
     window.location.reload()
 }
-
+function comparador() { 
+	return Math.random() - 0.5; 
+}
 
 /*INÍCIO HOME*/
 
@@ -61,6 +63,13 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     //a função também serve para pegar o id do quiz
     // quizz.id === i
     toggleHome()
+    //colocando as respostas em uma array e embaralhando a array para a ordem ficar aleatória
+    let RespostasArray= []
+    for(let index= 0 ; index< quizzesArray[quizz.id].questions[0].answers.length ; index++){
+        RespostasArray.push(quizzesArray[quizz.id].questions[0].answers[index])
+    }
+    RespostasArray.sort(comparador)
+
     document.querySelector('.quiz').innerHTML = `
         <div class="ImgTopoQuiz">
             <img class="ImagemQuizBanner" src="${quizzesArray[quizz.id].image}" alt="">
@@ -73,26 +82,33 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
             <div class="Resposta">
                 <div class="RespostaColuna1">
                     <div class="Resposta1">
-                        <img class="imgresposta" src="${quizzesArray[quizz.id].questions[0].answers[0].image}" alt="">
-                        <span>${quizzesArray[quizz.id].questions[0].answers[0].text}</span>
-                    </div>
-                    <div class="Resposta2">
-                        <img class="imgresposta" src="${quizzesArray[quizz.id].questions[0].answers[1].image}" alt="">
-                        <span>${quizzesArray[quizz.id].questions[0].answers[1].text}</span>
+                        <img class="imgresposta" src="${RespostasArray[0].image}" alt="">
+                        <span>${RespostasArray[0].text}</span>
                     </div>
                 </div>
                 <div class="RespostaColuna2">
-                    <div class="Resposta3">
-                        <img class="imgresposta" src="${quizzesArray[quizz.id].questions[0].answers[2].image}" alt="">
-                        <span>${quizzesArray[quizz.id].questions[0].answers[2].text}</span>
-                    </div>
-                    <div class="Resposta4">
-                        <img class="imgresposta" src="${quizzesArray[quizz.id].questions[0].answers[2].image}" alt="">
-                        <span>${quizzesArray[quizz.id].questions[0].answers[3].text}</span>
+                    <div class="Resposta2">
+                        <img class="imgresposta" src="${RespostasArray[1].image}" alt="">
+                        <span>${RespostasArray[1].text}</span>
                     </div>
                 </div>
+                
             </div>
         </div>`
+        if(RespostasArray[2] !== undefined){
+            document.querySelector('.RespostaColuna1').innerHTML +=
+                `<div class="Resposta3">
+                    <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
+                    <span>${RespostasArray[2].text}</span>
+                </div>`
+        }
+        if(RespostasArray[3] !== undefined){
+            document.querySelector('.RespostaColuna2').innerHTML +=
+            `   <div class="Resposta4">
+                    <img class="imgresposta" src="${RespostasArray[3].image}" alt="">
+                    <span>${RespostasArray[3].text}</span>
+                </div>`
+        }
 }
 /*FIM QUIZ*/
 
