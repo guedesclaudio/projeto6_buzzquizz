@@ -88,51 +88,59 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     //a função também serve para pegar o id do quiz
     // quizz.id === i
     toggleHome()
-    //colocando as respostas em uma array e embaralhando a array para a ordem ficar aleatória
-    for(let index= 0 ; index< quizzesArray[quizz.id].questions[0].answers.length ; index++){
-        RespostasArray.push(quizzesArray[quizz.id].questions[0].answers[index])
-    }
-    RespostasArray.sort(comparador)
-    console.log(quizzesArray)
     document.querySelector('.quiz').innerHTML = `
         <div class="ImgTopoQuiz">
             <img class="ImagemQuizBanner" src="${quizzesArray[quizz.id].image}" alt="">
             <h2 class="TituloQuizBanner">${quizzesArray[quizz.id].title}</h2>
-        </div>
-        <div class="QeAQuiz">
-            <div class="Pergunta">
-                <h3>${quizzesArray[quizz.id].questions[0].title}</h3>
-            </div>
-            <div class="Resposta">
-                <div class="RespostaColuna1">
-                    <div class="Resposta1" onclick="VerificarResposta(RespostasArray[0], this)">
-                        <img class="imgresposta" src="${RespostasArray[0].image}" alt="">
-                        <span>${RespostasArray[0].text}</span>
-                    </div>
-                </div>
-                <div class="RespostaColuna2">
-                    <div class="Resposta2" onclick="VerificarResposta(RespostasArray[1], this)">
-                        <img class="imgresposta" src="${RespostasArray[1].image}" alt="">
-                        <span>${RespostasArray[1].text}</span>
-                    </div>
-                </div>
-                
-            </div>
         </div>`
-        if(RespostasArray[2] !== undefined){
-            document.querySelector('.RespostaColuna1').innerHTML +=
-                `<div class="Resposta3" onclick="VerificarResposta(RespostasArray[2], this)">
-                    <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
-                    <span>${RespostasArray[2].text}</span>
-                </div>`
+        //for para adicionar todas as perguntas
+    for(let indice= 0 ; indice< quizzesArray[quizz.id].questions.length ; indice++){
+        RespostasArray = []
+        //colocando as respostas em uma array e embaralhando a array para a ordem ficar aleatória
+        for(let index= 0 ; index< quizzesArray[quizz.id].questions[indice].answers.length ; index++){
+            RespostasArray.push(quizzesArray[quizz.id].questions[indice].answers[index])
         }
-        if(RespostasArray[3] !== undefined){
-            document.querySelector('.RespostaColuna2').innerHTML +=
-            `   <div class="Resposta4" onclick="VerificarResposta(RespostasArray[3], this)">
-                    <img class="imgresposta" src="${RespostasArray[3].image}" alt="">
-                    <span>${RespostasArray[3].text}</span>
-                </div>`
-        }
+        RespostasArray.sort(comparador)
+        document.querySelector('.quiz').innerHTML += `
+            <div class="QeAQuiz">
+                <div class="Pergunta">
+                    <h3>${quizzesArray[quizz.id].questions[indice].title}</h3>
+                </div>
+                <div class="Resposta questao${indice}">
+                    <div class="RespostaColuna1">
+                        <div class="Resposta1" onclick="VerificarResposta(RespostasArray[0], this)">
+                            <img class="imgresposta" src="${RespostasArray[0].image}" alt="">
+                            <span>${RespostasArray[0].text}</span>
+                        </div>
+                    </div>
+                    <div class="RespostaColuna2">
+                        <div class="Resposta2" onclick="VerificarResposta(RespostasArray[1], this)">
+                            <img class="imgresposta" src="${RespostasArray[1].image}" alt="">
+                            <span>${RespostasArray[1].text}</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>`
+            if(RespostasArray[2] !== undefined){
+                document.querySelector('.questao'+indice+' .RespostaColuna1').innerHTML +=
+                    `<div class="Resposta3" onclick="VerificarResposta(RespostasArray[2], this)">
+                        <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
+                        <span>${RespostasArray[2].text}</span>
+                    </div>`
+                    console.log('no2')
+            }
+            if(RespostasArray[3] !== undefined){
+                document.querySelector('.questao'+indice+' .RespostaColuna2').innerHTML +=
+                `   <div class="Resposta4" onclick="VerificarResposta(RespostasArray[3], this)">
+                        <img class="imgresposta" src="${RespostasArray[3].image}" alt="">
+                        <span>${RespostasArray[3].text}</span>
+                    </div>`
+                    console.log('no3')
+            }
+        
+    }
+    
 }
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
