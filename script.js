@@ -20,6 +20,12 @@ let templateQuestion = {
         answers: []
 }
 
+let templateAnswer = {
+    text: "",
+    image: "",
+    isCorrectAnswer: true
+}
+
 let templateLevel = {
     title: "",
     image: "",
@@ -39,6 +45,17 @@ let criarNmrNiveis
 let DOM_perguntas
 
 // variáveis criar perguntas // 
+let textoPergunta
+let corFundoPergunta
+let respostaCorreta
+let respostaCorretaURL
+let respostaIncorreta_1
+let respostaIncorretaURL_1
+let respostaIncorreta_2
+let respostaIncorretaURL_2
+let respostaIncorreta_3
+let respostaIncorretaURL_3
+
 let nmrPergunta
 
 /*FIM GLOBAIS*/
@@ -209,7 +226,7 @@ function goToCriar() {
 }
 
 function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- se foram preenchidos corretamente.
-        if (criarTitulo.length > 65 || criarTitulo.lenght < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
+        if (criarTitulo.value.length > 65 || criarTitulo.value.length < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
             alert("Os dados são inválidos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres")
         } else {
             document.querySelector('.criacao').innerHTML = `<div class="perguntasCriar">
@@ -235,6 +252,7 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
                 <input class='respostaIncorretaURL_3' type="text" placeholder="  URL da imagem 3">
 
             </div>` // tela de perguntas (3.2)
+            
 
             for (let i = 1; i < Number(criarNmrPerguntas.value); i++) {
                 document.querySelector('.perguntasCriar').innerHTML += `<div class="caixaInputMini">
@@ -246,10 +264,11 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             document.querySelector('.perguntasCriar').innerHTML += `<button class="goToNiveis" onclick="goToCriarNiveis()">Prosseguir para criar níveis</button>
 
             </div>`
-            
-   
 
-            quizObjeto.title = criarTitulo.value // Enviando dados pro Objeto do Quiz
+            //------------------------------------//
+            // Enviando dados pro Objeto do Quiz  //
+            //
+            quizObjeto.title = criarTitulo.value 
             quizObjeto.image = criarImagem.value      
             for (let i = 0; i < Number(criarNmrPerguntas.value); i++){
                 quizObjeto.questions.push(templateQuestion)
@@ -258,8 +277,25 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
                 quizObjeto.levels.push(templateLevel)
             }
         }
-    }
+}
 
+function goToCriarNiveis() { 
+    getInfoPergunta()        
+
+}
+
+function getInfoPergunta(){
+    textoPergunta = document.querySelector(".textoPergunta")
+    corFundoPergunta = document.querySelector(".corFundoPergunta")
+    respostaCorreta = document.querySelector(".respostaCorreta")
+    respostaCorretaURL = document.querySelector(".respostaCorretaURL")
+    respostaIncorreta_1 = document.querySelector(".respostaIncorreta_1")
+    respostaIncorretaURL_1 = document.querySelector(".respostaIncorretaURL_1")
+    respostaIncorreta_2 = document.querySelector(".respostaIncorreta_2")
+    respostaIncorretaURL_2 = document.querySelector(".respostaIncorretaURL_2")
+    respostaIncorreta_3 = document.querySelector(".respostaIncorreta_3")
+    respostaIncorretaURL_3 = document.querySelector(".respostaIncorretaURL_3")
+}
 
 function expandirCaixaInput(iconeExpandir) {
     DOM_perguntas = document.querySelectorAll(".perguntasCriar div");
@@ -303,9 +339,13 @@ function toggleCaixaInput(caixaInput){
     } else {
         caixaInput.classList.add("caixaInputMini")
         caixaInput.classList.remove("caixaInput")
+        caixaInput.classList.add("Concluido")
+        
+        if (caixaInput.parentNode.classList.contains("perguntasCriar")){
         caixaInput.innerHTML = ` <span>Pergunta concluída</span>`
-        caixaInput.classList.add("perguntaConcluida")
+    } else {
+        caixaInput.innerHTML = ` <span>Nível concluído</span>`
+        }
     }
 }
-
 /*FIM CRIAÇÃO*/
