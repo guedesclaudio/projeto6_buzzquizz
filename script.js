@@ -455,18 +455,20 @@ function trabalhandoNisso() {
     alert("Essa função ainda não está pronta")
 }
 
+
+
 //CRIAÇÃO DAS VALIDAÇÕES DAS PERGUNTAS - CLAUDIO
 function validaPergunta() { 
-    const perguntaCriada = prompt("Digite a pergunta") //talvez precise alterar para let
+    const perguntaCriada = document.querySelector("input.textoPergunta").value 
     
     if (pergunta.length < 20) {
         alert("As perguntas devem possuir no minímo 20 caracteres")
-        //return false
+        return false
     }
 }
 
 function validaCorDeFundo() {
-    const corDeFundo = prompt("Digite a cor de fundo") //talvez precise alterar para let
+    const corDeFundo = document.querySelector("input.corFundoPergunta").value //talvez precise alterar para let
     const letrasMaiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
                              "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     const letrasMinusculas = []
@@ -480,10 +482,10 @@ function validaCorDeFundo() {
         //console.log("passou no primeiro")
         for (let i = 1; i < corDeFundo.length; i++) {
             if (letrasMaiusculas.indexOf(corDeFundo[i]) > -1 || letrasMinusculas.indexOf(corDeFundo[i]) > -1 || numeros.indexOf(corDeFundo[i]) > -1) console.log("é aceito")
-            else console.log('nao aceitou') //return false
+            else return false
         }
     }
-    else console.log("nao aceitou") //return false
+    else return false
 }
 
 /*Acho que nao vai precisar dessa
@@ -497,30 +499,32 @@ function validaResposta() {
 }*/
 
 function validaURL() {
-    const texto = prompt("Digite a url") //talvez precise alterar para let
+    const texto = document.querySelector("input.respostaCorretaURL").value //talvez precise alterar para let
     try {
      let url = new URL(texto)
      console.log("é uma url")
     } 
     catch(err) {
        console.log("não é uma url")
+       return false
     }
  }
 
  function validaRespostaCorreta() {
-    let respostaCorreta = prompt("Digite a resposta correta") ;  respostaCorreta = respostaCorreta.trim() ;
-    if (respostaCorreta === "" ) console.log("resposta correta ta vazia") 
+    let respostaCorreta = document.querySelector("input.respostaCorreta").value ;  respostaCorreta = respostaCorreta.trim() ;
+    if (respostaCorreta === "" ) return false 
  }
 
  function validaQtdRespostasIncorretas() {
     const respostasIncorretas = []
-    let resposta1 = prompt("Digite a resposta 1") ; resposta1 = resposta1.trim() ;
-    let resposta2 = prompt("Digite a resposta 2") ; resposta2 = resposta2.trim() ;
-    let resposta3 = prompt("Digite a resposta 3") ; resposta3 = resposta3.trim() ;
+    let resposta1 = document.querySelector("input.respostaIncorreta_1").value ; resposta1 = resposta1.trim() ;
+    let resposta2 = document.querySelector("input.respostaIncorreta_2").value ; resposta2 = resposta2.trim() ;
+    let resposta3 = document.querySelector("input.respostaIncorreta_3").value ; resposta3 = resposta3.trim() ;
     respostasIncorretas.push(resposta1, resposta2, resposta3)
     console.log(respostasIncorretas)
     if (respostasIncorretas[0] === "" && respostasIncorretas[1] === "" && respostasIncorretas[2] === "") {
         console.log("precisa de pelo menos uma resposta incorreta")
+        return false
     }
  }
  
@@ -551,12 +555,16 @@ function validaDescricaoNivel() {
 }
 
 //Essa é a ideia final
-function validaTudo() {
-    if (validaDescricaoNivel() == false) {
-        console.log("parou funcao")
+function validaTudoPerguntas() {
+    if (validaPergunta() == false ||
+        validaCorDeFundo() == false ||
+        validaURL() ||
+        validaRespostaCorreta() || 
+        validaQtdRespostasIncorretas()) {
+        alert("Digite corretamente")
         return
     }
-    console.log("continou")
+    console.log("passou")
 }
 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
