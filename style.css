@@ -27,7 +27,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 69px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .bannerTopo :hover {
@@ -191,6 +191,7 @@ ion-icon {
     justify-content: space-between;
     font-size: 20px;
     font-weight: 700;
+    padding-bottom: 50px;
 }
 .Resposta1, .Resposta2, .Resposta3, .Resposta4, .QeAQuiz, .RespostaColuna1, .RespostaColuna2, .quiz{
     display: flex;

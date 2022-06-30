@@ -166,68 +166,51 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
 function VerificarResposta(elemento){ //verificar jeito melhor de fazer
-    let NumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
+    let ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
     if(elemento.classList.contains('esbranquicado') === false){
-        document.querySelector('.'+NumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
-        document.querySelector('.'+NumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
-        if(RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][2] !== undefined){
-            document.querySelector('.'+NumeroDaQuestao +' .Resposta3').classList.add('esbranquicado')
+        document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
+        document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
+        if(RespostasArray[ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]][2] !== undefined){
+            document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta3').classList.add('esbranquicado')
         }
-        if(RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][3] !== undefined){
-            document.querySelector('.'+NumeroDaQuestao +' .Resposta4').classList.add('esbranquicado')
+        if(RespostasArray[ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]][3] !== undefined){
+            document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta4').classList.add('esbranquicado')
         }
         elemento.classList.remove('esbranquicado')
     }
 
     
     switch(true){
-        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][0].isCorrectAnswer:
-            document.querySelector('.'+NumeroDaQuestao +' .Resposta1').classList.add('acertou')
-            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
-            console.log('1')
+        case RespostasArray[ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]][0].isCorrectAnswer:
+            document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta1').classList.add('acertou')
+            document.querySelector('.'+ClasseNumeroDaQuestao).classList.add('errou')
             break
-        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][1].isCorrectAnswer:
-            document.querySelector('.'+NumeroDaQuestao +' .Resposta2').classList.add('acertou')
-            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
-            console.log('2')
+        case RespostasArray[ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]][1].isCorrectAnswer:
+            document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta2').classList.add('acertou')
+            document.querySelector('.'+ClasseNumeroDaQuestao).classList.add('errou')
             break
-        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][2].isCorrectAnswer:
-            document.querySelector('.'+NumeroDaQuestao +' .Resposta3').classList.add('acertou')
-            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
-            console.log('3')
+        case RespostasArray[ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]][2].isCorrectAnswer:
+            document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta3').classList.add('acertou')
+            document.querySelector('.'+ClasseNumeroDaQuestao).classList.add('errou')
             break
-        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][3].isCorrectAnswer:
-            document.querySelector('.'+NumeroDaQuestao +' .Resposta4').classList.add('acertou')
-            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
-            console.log('4')
+        case RespostasArray[ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]][3].isCorrectAnswer:
+            document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta4').classList.add('acertou')
+            document.querySelector('.'+ClasseNumeroDaQuestao).classList.add('errou')
             break
     }
-
-
-
-
-
-
-    /*i
-    switch(true){
-        case RespostasArray[0].isCorrectAnswer:
-            document.querySelector('.Resposta1').classList.add('acertou')
-            document.querySelector('.Resposta').classList.add('errou')
-            break
-        case RespostasArray[1].isCorrectAnswer:
-            document.querySelector('.Resposta2').classList.add('acertou')
-            document.querySelector('.Resposta').classList.add('errou')
-            break
-        case RespostasArray[2].isCorrectAnswer:
-            document.querySelector('.Resposta3').classList.add('acertou')
-            document.querySelector('.Resposta').classList.add('errou')
-            break
-        case RespostasArray[3].isCorrectAnswer:
-            document.querySelector('.Resposta4').classList.add('acertou')
-            document.querySelector('.Resposta').classList.add('errou')
-            break
-    }*/
-   
+    let NumeroDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
+    NumeroDaQuestao = Number(NumeroDaQuestao)
+    const proximonumero = (NumeroDaQuestao + 1)
+    const elementoatual = elemento.parentNode.parentNode.parentNode.querySelector('.Pergunta')
+    const ultimoelemento = document.querySelector('.questao'+(RespostasArray.length - 1)).parentNode.querySelector('.Pergunta')
+    if(elementoatual === ultimoelemento){
+        return
+    }
+    const proximoelemento = document.querySelector('.questao'+proximonumero)//.parentNode.querySelector('.Pergunta')
+    function scroll (){
+        proximoelemento.scrollIntoView({behavior: "smooth", block:'end'})
+    }
+    setTimeout(scroll, 2000)
 }
 
 /*FIM QUIZ*/
