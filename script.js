@@ -285,7 +285,7 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             for (let i = 1; i < Number(criarNmrPerguntas.value); i++) {
                 document.querySelector('.perguntasCriar').innerHTML += `<div class="caixaInputMini">
                 <span>Pergunta ${i + 1}</span>
-                <ion-icon name="create-outline" onclick="expandirCaixaInputP(this)"></ion-icon>
+                <ion-icon name="create-outline" onclick="validaTudoPerguntas(this)"></ion-icon>
             </div>`
             }
 
@@ -461,7 +461,7 @@ function trabalhandoNisso() {
 function validaPergunta() { 
     const perguntaCriada = document.querySelector("input.textoPergunta").value 
     
-    if (pergunta.length < 20) {
+    if (perguntaCriada.length < 20) {
         alert("As perguntas devem possuir no minímo 20 caracteres")
         return false
     }
@@ -555,16 +555,17 @@ function validaDescricaoNivel() {
 }
 
 //Essa é a ideia final
-function validaTudoPerguntas() {
+function validaTudoPerguntas(icone) {
     if (validaPergunta() == false ||
         validaCorDeFundo() == false ||
-        validaURL() ||
-        validaRespostaCorreta() || 
-        validaQtdRespostasIncorretas()) {
+        validaURL() == false||
+        validaRespostaCorreta() == false || 
+        validaQtdRespostasIncorretas() == false) {
         alert("Digite corretamente")
         return
     }
     console.log("passou")
+    expandirCaixaInputP(icone)
 }
 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
