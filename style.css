@@ -198,6 +198,7 @@ ion-icon {
 }
 .Resposta1, .Resposta2, .Resposta3, .Resposta4{
     margin-bottom: 20px;
+    width: 330px;
 }
 .imgresposta{
     width: 330px;
