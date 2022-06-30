@@ -36,6 +36,7 @@ let templateLevel = {
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
+let indice = 0
 
 /* variáveis de criação */
 let criarTitulo 
@@ -89,7 +90,7 @@ function toggleHome() {  // função pra fazer aparecer e sumir a Homepage
 
 //função para obter os quizzes da api
 function ObterQuizzes(){
-    const promise = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes')
+    const promise = axios.get('https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes')
     promise.then(ObterQuizzesSucesso)
 }
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
@@ -124,13 +125,13 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
             <h2 class="TituloQuizBanner">${quizzesArray[quizz.id].title}</h2>
         </div>`
         //for para adicionar todas as perguntas
-    for(let indice= 0 ; indice< quizzesArray[quizz.id].questions.length ; indice++){
-        RespostasArray = []
+    for(indice= 0 ; indice< quizzesArray[quizz.id].questions.length ; indice++){
+        RespostasArray.push([])
         //colocando as respostas em uma array e embaralhando a array para a ordem ficar aleatória
         for(let index= 0 ; index< quizzesArray[quizz.id].questions[indice].answers.length ; index++){
-            RespostasArray.push(quizzesArray[quizz.id].questions[indice].answers[index])
+            RespostasArray[indice].push(quizzesArray[quizz.id].questions[indice].answers[index])
         }
-        RespostasArray.sort(comparador)
+        RespostasArray[indice].sort(comparador)
         document.querySelector('.quiz').innerHTML += `
             <div class="QeAQuiz">
                 <div class="Pergunta">
@@ -138,54 +139,85 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
                 </div>
                 <div class="Resposta questao${indice}">
                     <div class="RespostaColuna1">
-                        <div class="Resposta1" onclick="VerificarResposta(RespostasArray[0], this)">
-                            <img class="imgresposta" src="${RespostasArray[0].image}" alt="">
-                            <span>${RespostasArray[0].text}</span>
+                        <div class="Resposta1" onclick="VerificarResposta(this)">
+                            <img class="imgresposta" src="${RespostasArray[indice][0].image}" alt="">
+                            <span>${RespostasArray[indice][0].text}</span>
                         </div>
                     </div>
                     <div class="RespostaColuna2">
-                        <div class="Resposta2" onclick="VerificarResposta(RespostasArray[1], this)">
-                            <img class="imgresposta" src="${RespostasArray[1].image}" alt="">
-                            <span>${RespostasArray[1].text}</span>
+                        <div class="Resposta2" onclick="VerificarResposta(this)">
+                            <img class="imgresposta" src="${RespostasArray[indice][1].image}" alt="">
+                            <span>${RespostasArray[indice][1].text}</span>
                         </div>
                     </div>
                     
                 </div>
             </div>`
-            if(RespostasArray[2] !== undefined){
+            if(RespostasArray[indice][2] !== undefined){
                 document.querySelector('.questao'+indice+' .RespostaColuna1').innerHTML +=
-                    `<div class="Resposta3" onclick="VerificarResposta(RespostasArray[2], this)">
-                        <img class="imgresposta" src="${RespostasArray[2].image}" alt="">
-                        <span>${RespostasArray[2].text}</span>
+                    `<div class="Resposta3" onclick="VerificarResposta(this)">
+                        <img class="imgresposta" src="${RespostasArray[indice][2].image}" alt="">
+                        <span>${RespostasArray[indice][2].text}</span>
                     </div>`
-                    console.log('no2')
+
             }
-            if(RespostasArray[3] !== undefined){
+            if(RespostasArray[indice][3] !== undefined){
                 document.querySelector('.questao'+indice+' .RespostaColuna2').innerHTML +=
-                `   <div class="Resposta4" onclick="VerificarResposta(RespostasArray[3], this)">
-                        <img class="imgresposta" src="${RespostasArray[3].image}" alt="">
-                        <span>${RespostasArray[3].text}</span>
+                `   <div class="Resposta4" onclick="VerificarResposta(this)">
+                        <img class="imgresposta" src="${RespostasArray[indice][3].image}" alt="">
+                        <span>${RespostasArray[indice][3].text}</span>
                     </div>`
-                    console.log('no3')
+                    
             }
-        
     }
     
 }
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
-function VerificarResposta(RespostaObjeto, elemento){ //verificar jeito melhor de fazer
+function VerificarResposta(elemento){ //verificar jeito melhor de fazer
+    let NumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
     if(elemento.classList.contains('esbranquicado') === false){
-        document.querySelector('.Resposta1').classList.add('esbranquicado')
-        document.querySelector('.Resposta2').classList.add('esbranquicado')
-        if(RespostasArray[2] !== undefined){
-            document.querySelector('.Resposta3').classList.add('esbranquicado')
+        document.querySelector('.'+NumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
+        document.querySelector('.'+NumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
+        if(RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][2] !== undefined){
+            document.querySelector('.'+NumeroDaQuestao +' .Resposta3').classList.add('esbranquicado')
         }
-        if(RespostasArray[3] !== undefined){
-            document.querySelector('.Resposta4').classList.add('esbranquicado')
+        if(RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][3] !== undefined){
+            document.querySelector('.'+NumeroDaQuestao +' .Resposta4').classList.add('esbranquicado')
         }
         elemento.classList.remove('esbranquicado')
     }
+
+    
+    switch(true){
+        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][0].isCorrectAnswer:
+            document.querySelector('.'+NumeroDaQuestao +' .Resposta1').classList.add('acertou')
+            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
+            console.log('1')
+            break
+        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][1].isCorrectAnswer:
+            document.querySelector('.'+NumeroDaQuestao +' .Resposta2').classList.add('acertou')
+            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
+            console.log('2')
+            break
+        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][2].isCorrectAnswer:
+            document.querySelector('.'+NumeroDaQuestao +' .Resposta3').classList.add('acertou')
+            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
+            console.log('3')
+            break
+        case RespostasArray[NumeroDaQuestao[NumeroDaQuestao.length-1]][3].isCorrectAnswer:
+            document.querySelector('.'+NumeroDaQuestao +' .Resposta4').classList.add('acertou')
+            document.querySelector('.'+NumeroDaQuestao).classList.add('errou')
+            console.log('4')
+            break
+    }
+
+
+
+
+
+
+    /*i
     switch(true){
         case RespostasArray[0].isCorrectAnswer:
             document.querySelector('.Resposta1').classList.add('acertou')
@@ -203,7 +235,7 @@ function VerificarResposta(RespostaObjeto, elemento){ //verificar jeito melhor d
             document.querySelector('.Resposta4').classList.add('acertou')
             document.querySelector('.Resposta').classList.add('errou')
             break
-    }
+    }*/
    
 }
 
