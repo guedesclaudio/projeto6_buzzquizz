@@ -7,9 +7,35 @@
 
 /*INÍCIO GLOBAIS*/
 
+let quizObjeto = {
+	title: "",
+	image: "",
+	questions: [],//recebe templateQuestion
+	levels: []//recebe templateLevel
+}
+
+let templateQuestion = {
+        title: "",
+        color: "#123456",
+        answers: []
+}
+
+let templateLevel = {
+    title: "",
+    image: "",
+    text: "",
+    minValue: 0
+}
+
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
+
+/* variáveis de criação */
+let criarTitulo 
+let criarImagem 
+let criarNmrPerguntas 
+let criarNmrNiveis 
 
 /*FIM GLOBAIS*/
 
@@ -158,18 +184,45 @@ function VerificarResposta(RespostaObjeto, elemento){ //verificar jeito melhor d
 
 /*INÍCIO CRIAÇÃO*/
 
-    function goToCriar() {
-        toggleHome()
-        document.querySelector('.criacao').innerHTML = `<div class="infoCriar">
+function goToCriar() {
+    toggleHome()
+    document.querySelector('.criacao').innerHTML = 
+    `<div class="infoCriar">
         <span>Comece pelo começo</span>
         <div class="caixaInput">
-            <input class='titulo' type="text" placeholder="  Escolha o titulo do seu quizz">
+            <input class="titulo" type="text" placeholder="  Escolha o titulo do seu quizz">
             <input class='imageURL' type="text" placeholder="  Insira a URL da imagem do seu quizz">
             <input class='nmrPerguntas' type="text" placeholder="  Quantas perguntas terá seu quizz?">
             <input class='nmrNiveis' type="text" placeholder="  Quantos níveis terá seu quizz?">
         </div>
-        <button class="goToPerguntas">Prosseguir para criar perguntas</button>
+        <button class="goToPerguntas" onclick="goToCriarPerguntas()">Prosseguir para criar perguntas</button>
     </div>`
+    criarTitulo = document.querySelector(".titulo")
+    criarImagem = document.querySelector(".imageURL")
+    criarNmrPerguntas = document.querySelector(".nmrPerguntas")
+    criarNmrNiveis = document.querySelector(".nmrNiveis")
+
+}
+
+function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- se foram preenchidos corretamente.
+    if (criarImagem.value === null || criarTitulo.value === null || criarNmrNiveis.value === null || criarNmrPerguntas.value === null){
+        alert("Preencha os dados.")
+    } else {
+        if (criarTitulo.length > 65 || criarTitulo.lenght < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
+            alert("Os dados estão incorretos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres")
+        } else {
+            document.querySelector('.criacao').innerHTML = "" // Aqui entra a tela de perguntas (3.2)
+
+            quizObjeto.title = criarTitulo.value       //daqui pra baixo está preparando o objeto do quiz
+            quizObjeto.image = criarImagem.value      // com título e imagem prontos e quantidade de níveis e perguntas definidos.
+            for (let i = 0; i < Number(criarNmrPerguntas.value); i++){
+                quizObjeto.questions.push(templateQuestion)
+            }
+            for (let i = 0; i < Number(criarNmrNiveis.value); i++){
+                quizObjeto.levels.push(templateLevel)
+            }
+        }
     }
+}
 
 /*FIM CRIAÇÃO*/
