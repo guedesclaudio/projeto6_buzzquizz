@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="bannerTopo"><span onclick="refresh()">BuzzQuizz</span></div>
-    <div class="home hide">
+    <div class="home">
         <div class="criarQuiz">
             <span>Você não criou nenhum quizz ainda :(</span>
             <button onclick="goToCriar()">Criar Quizz</button>
@@ -30,43 +30,7 @@
 
     <div class="criacao">
 
-        <div class="perguntasCriar">
-          
-                <span>Crie suas perguntas</span>
-                    <div class="caixaInput">
-                        <span>Pergunta 1</span>
-                        
-                        <input class='textoPergunta' type="text" placeholder="  Texto da pergunta">
-                        <input class='corFundoPergunta' type="text" placeholder="  Cor de fundo da pergunta">
-
-                        <span>Resposta correta</span>
-                        <input class='respostaCorreta' type="text" placeholder="  Resposta correta">
-                        <input class='respostaCorretaURL' type="text" placeholder="  URL da imagem">
-
-                        <span>Respostas incorretas</span>
-                        <input class='respostaIncorreta_1' type="text" placeholder="  Resposta incorreta 1">
-                        <input class='respostaIncorretaURL_1' type="text" placeholder="  URL da imagem 1">
-                        <br>
-                        <input class='respostaIncorreta_2' type="text" placeholder="  Resposta incorreta 2">
-                        <input class='respostaIncorretaURL_2' type="text" placeholder="  URL da imagem 2">
-                        <br>
-                        <input class='respostaIncorreta_3' type="text" placeholder="  Resposta incorreta 3">
-                        <input class='respostaIncorretaURL_3' type="text" placeholder="  URL da imagem 3">
-
-                    </div>
-                    <div class="caixaInputMini">
-                        <span>Pergunta 2</span>
-                        <ion-icon name="create-outline" onclick="VerificarPergunta()"></ion-icon>
-                    </div>
-
-                    <div class="caixaInputMini">
-                        <span>Pergunta 3</span>
-                        <ion-icon name="create-outline" onclick="VerificarPergunta()"></ion-icon>
-                    </div>
-                
-                <button class="goToNiveis" onclick="goToCriarNiveis()">Prosseguir para criar níveis</button>
-
-        </div>
+        
 
         <div class="niveisCriar">
 

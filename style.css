@@ -40,6 +40,7 @@ body {
 
 ion-icon {
     color: black;
+    cursor: pointer;
 }
 
 /*FIM MAIN*/
@@ -337,6 +338,10 @@ ion-icon {
 
 .caixaInputMini ion-icon {
     margin-bottom: 7px
+}
+
+.perguntaConcluida {
+    background-color: rgb(170, 249, 170);
 }
 
 /*FIM CRIAÇÃO*/

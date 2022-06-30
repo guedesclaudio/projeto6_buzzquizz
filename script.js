@@ -36,6 +36,10 @@ let criarTitulo
 let criarImagem 
 let criarNmrPerguntas 
 let criarNmrNiveis 
+let DOM_perguntas
+
+// variáveis criar perguntas // 
+let nmrPergunta
 
 /*FIM GLOBAIS*/
 
@@ -205,16 +209,48 @@ function goToCriar() {
 }
 
 function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- se foram preenchidos corretamente.
-    if (criarImagem.value === null || criarTitulo.value === null || criarNmrNiveis.value === null || criarNmrPerguntas.value === null){
-        alert("Preencha os dados.")
-    } else {
         if (criarTitulo.length > 65 || criarTitulo.lenght < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
-            alert("Os dados estão incorretos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres")
+            alert("Os dados são inválidos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres")
         } else {
-            document.querySelector('.criacao').innerHTML = "" // Aqui entra a tela de perguntas (3.2)
+            document.querySelector('.criacao').innerHTML = `<div class="perguntasCriar">
+            <span>Crie suas perguntas</span>
+            <div class="caixaInput">
+                <span>Pergunta 1</span>
+                
+                <input class='textoPergunta' type="text" placeholder="  Texto da pergunta">
+                <input class='corFundoPergunta' type="text" placeholder="  Cor de fundo da pergunta">
 
-            quizObjeto.title = criarTitulo.value       //daqui pra baixo está preparando o objeto do quiz
-            quizObjeto.image = criarImagem.value      // com título e imagem prontos e quantidade de níveis e perguntas definidos.
+                <span>Resposta correta</span>
+                <input class='respostaCorreta' type="text" placeholder="  Resposta correta">
+                <input class='respostaCorretaURL' type="text" placeholder="  URL da imagem">
+
+                <span>Respostas incorretas</span>
+                <input class='respostaIncorreta_1' type="text" placeholder="  Resposta incorreta 1">
+                <input class='respostaIncorretaURL_1' type="text" placeholder="  URL da imagem 1">
+                <br>
+                <input class='respostaIncorreta_2' type="text" placeholder="  Resposta incorreta 2">
+                <input class='respostaIncorretaURL_2' type="text" placeholder="  URL da imagem 2">
+                <br>
+                <input class='respostaIncorreta_3' type="text" placeholder="  Resposta incorreta 3">
+                <input class='respostaIncorretaURL_3' type="text" placeholder="  URL da imagem 3">
+
+            </div>` // tela de perguntas (3.2)
+
+            for (let i = 1; i < Number(criarNmrPerguntas.value); i++) {
+                document.querySelector('.perguntasCriar').innerHTML += `<div class="caixaInputMini">
+                <span>Pergunta ${i + 1}</span>
+                <ion-icon name="create-outline" onclick="expandirCaixaInput(this)"></ion-icon>
+            </div>`
+            }
+
+            document.querySelector('.perguntasCriar').innerHTML += `<button class="goToNiveis" onclick="goToCriarNiveis()">Prosseguir para criar níveis</button>
+
+            </div>`
+            
+   
+
+            quizObjeto.title = criarTitulo.value // Enviando dados pro Objeto do Quiz
+            quizObjeto.image = criarImagem.value      
             for (let i = 0; i < Number(criarNmrPerguntas.value); i++){
                 quizObjeto.questions.push(templateQuestion)
             }
@@ -222,6 +258,53 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
                 quizObjeto.levels.push(templateLevel)
             }
         }
+    }
+
+
+function expandirCaixaInput(iconeExpandir) {
+    DOM_perguntas = document.querySelectorAll(".perguntasCriar div");
+    const miniCaixaInput = iconeExpandir.parentNode;
+    nmrPergunta = miniCaixaInput.querySelector("span").innerHTML
+    console.log(DOM_perguntas)
+    for(let i = 0; i < DOM_perguntas.length; i++){
+        console.log(DOM_perguntas[i])
+        if (DOM_perguntas[i].classList.contains("caixaInput")){
+            toggleCaixaInput(DOM_perguntas[i])
+        }
+    }
+    toggleCaixaInput(miniCaixaInput)
+    miniCaixaInput.innerHTML = `<span>${nmrPergunta}</span>
+                        
+    <input class='textoPergunta' type="text" placeholder="  Texto da pergunta">
+    <input class='corFundoPergunta' type="text" placeholder="  Cor de fundo da pergunta">
+
+    <span>Resposta correta</span>
+    <input class='respostaCorreta' type="text" placeholder="  Resposta correta">
+    <input class='respostaCorretaURL' type="text" placeholder="  URL da imagem">
+
+    <span>Respostas incorretas</span>
+    <input class='respostaIncorreta_1' type="text" placeholder="  Resposta incorreta 1">
+    <input class='respostaIncorretaURL_1' type="text" placeholder="  URL da imagem 1">
+    <br>
+    <input class='respostaIncorreta_2' type="text" placeholder="  Resposta incorreta 2">
+    <input class='respostaIncorretaURL_2' type="text" placeholder="  URL da imagem 2">
+    <br>
+    <input class='respostaIncorreta_3' type="text" placeholder="  Resposta incorreta 3">
+    <input class='respostaIncorretaURL_3' type="text" placeholder="  URL da imagem 3">
+
+</div>`
+
+}
+
+function toggleCaixaInput(caixaInput){
+    if (caixaInput.classList.contains("caixaInputMini")){
+        caixaInput.classList.remove("caixaInputMini")
+        caixaInput.classList.add("caixaInput")
+    } else {
+        caixaInput.classList.add("caixaInputMini")
+        caixaInput.classList.remove("caixaInput")
+        caixaInput.innerHTML = ` <span>Pergunta concluída</span>`
+        caixaInput.classList.add("perguntaConcluida")
     }
 }
 
