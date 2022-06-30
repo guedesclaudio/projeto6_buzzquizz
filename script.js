@@ -43,6 +43,7 @@ let criarImagem
 let criarNmrPerguntas 
 let criarNmrNiveis 
 let DOM_perguntas
+let DOM_niveis
 
 // variáveis criar perguntas // 
 let textoPergunta
@@ -57,6 +58,14 @@ let respostaIncorreta_3
 let respostaIncorretaURL_3
 
 let nmrPergunta
+
+// variáveis criar níveis //
+let tituloNivel
+let minValueNivel
+let urlNivel
+let decricaoNivel
+
+let nmrNivel
 
 /*FIM GLOBAIS*/
 
@@ -205,6 +214,8 @@ function VerificarResposta(RespostaObjeto, elemento){ //verificar jeito melhor d
 
 /*INÍCIO CRIAÇÃO*/
 
+//
+
 function goToCriar() {
     toggleHome()
     document.querySelector('.criacao').innerHTML = 
@@ -224,6 +235,8 @@ function goToCriar() {
     criarNmrNiveis = document.querySelector(".nmrNiveis")
 
 }
+
+//
 
 function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- se foram preenchidos corretamente.
         if (criarTitulo.value.length > 65 || criarTitulo.value.length < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
@@ -257,7 +270,7 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             for (let i = 1; i < Number(criarNmrPerguntas.value); i++) {
                 document.querySelector('.perguntasCriar').innerHTML += `<div class="caixaInputMini">
                 <span>Pergunta ${i + 1}</span>
-                <ion-icon name="create-outline" onclick="expandirCaixaInput(this)"></ion-icon>
+                <ion-icon name="create-outline" onclick="expandirCaixaInputP(this)"></ion-icon>
             </div>`
             }
 
@@ -279,10 +292,34 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
         }
 }
 
+//
+
 function goToCriarNiveis() { 
-    getInfoPergunta()        
+    document.querySelector('.criacao').innerHTML = `   <div class="niveisCriar">
+    <span>Agora, decida os níveis</span>
+    <div class="caixaInput">
+        <span>Nível 1</span>
+        
+        <input class='tituloNivel' type="text" placeholder="  Título do nivel">
+        <input class='minValueNivel' type="text" placeholder="  % mínima de acerto">
+        <input class='urlNivel' type="text" placeholder="  URL da imagem do nível">
+        <input class='descricaoNivel' type="text" placeholder="  Descrição do nível">
+        </div>
+        `     
+        for (let i = 1; i < Number(criarNmrNiveis.value); i++) {
+            document.querySelector('.niveisCriar').innerHTML += `<div class="caixaInputMini">
+            <span>Nível ${i + 1}</span>
+            <ion-icon name="create-outline" onclick="expandirCaixaInputN(this)"></ion-icon>
+        </div>`
+        }
+
+        document.querySelector('.niveisCriar').innerHTML += `<button class="goToSucesso" onclick="goToSucessoCriar()">Finalizar Quizz</button>
+
+        </div>`
 
 }
+
+//
 
 function getInfoPergunta(){
     textoPergunta = document.querySelector(".textoPergunta")
@@ -297,7 +334,18 @@ function getInfoPergunta(){
     respostaIncorretaURL_3 = document.querySelector(".respostaIncorretaURL_3")
 }
 
-function expandirCaixaInput(iconeExpandir) {
+//
+
+function getInfoNivel(){
+    tituloNivel = document.querySelector(".tituloNivel")
+    minValueNivel = document.querySelector(".minValueNivel")
+    urlNivel = document.querySelector(".urlNivel")
+    decricaoNivel = document.querySelector(".descricaoNivel")
+}
+
+//
+
+function expandirCaixaInputP(iconeExpandir) {
     DOM_perguntas = document.querySelectorAll(".perguntasCriar div");
     const miniCaixaInput = iconeExpandir.parentNode;
     nmrPergunta = miniCaixaInput.querySelector("span").innerHTML
@@ -332,6 +380,30 @@ function expandirCaixaInput(iconeExpandir) {
 
 }
 
+//
+
+function expandirCaixaInputN(iconeExpandir) {
+    DOM_niveis = document.querySelectorAll(".niveisCriar div");
+    const miniCaixaInput = iconeExpandir.parentNode;
+    nmrNivel = miniCaixaInput.querySelector("span").innerHTML
+    console.log(DOM_niveis)
+    for(let i = 0; i < DOM_niveis.length; i++){
+        console.log(DOM_niveis[i])
+        if (DOM_niveis[i].classList.contains("caixaInput")){
+            toggleCaixaInput(DOM_niveis[i])
+        }
+    }
+    toggleCaixaInput(miniCaixaInput)
+    miniCaixaInput.innerHTML = `<span>${nmrNivel}</span>
+        <input class='tituloNivel' type="text" placeholder="  Título do nivel">
+        <input class='minValueNivel' type="text" placeholder="  % mínima de acerto">
+        <input class='urlNivel' type="text" placeholder="  URL da imagem do nível">
+        <input class='descricaoNivel' type="text" placeholder="  Descrição do nível">`
+
+}
+
+//
+
 function toggleCaixaInput(caixaInput){
     if (caixaInput.classList.contains("caixaInputMini")){
         caixaInput.classList.remove("caixaInputMini")
@@ -344,8 +416,26 @@ function toggleCaixaInput(caixaInput){
         if (caixaInput.parentNode.classList.contains("perguntasCriar")){
         caixaInput.innerHTML = ` <span>Pergunta concluída</span>`
     } else {
-        caixaInput.innerHTML = ` <span>Nível concluído</span>`
+        caixaInput.innerHTML = ` <span>Nível definido</span>`
         }
     }
 }
+
+function goToSucessoCriar() {
+    document.querySelector('.criacao').innerHTML = `        <div class="sucessoCriar">
+    <span>Seu quizz está pronto!</span>
+    <div class="previewCard">
+        <img src="${quizObjeto.image}" alt="">
+
+        <span>${quizObjeto.title}</span>
+    </div>
+    <button class="" onclick="trabalhandoNisso()">Acessar Quizz</button>
+    <div class="backHome" onclick="refresh()">Voltar pra home</div>
+</div>`
+}
 /*FIM CRIAÇÃO*/
+
+
+function trabalhandoNisso() {
+    alert("Essa função ainda não está pronta")
+}
