@@ -454,3 +454,109 @@ function goToSucessoCriar() {
 function trabalhandoNisso() {
     alert("Essa função ainda não está pronta")
 }
+
+//CRIAÇÃO DAS VALIDAÇÕES DAS PERGUNTAS - CLAUDIO
+function validaPergunta() { 
+    const perguntaCriada = prompt("Digite a pergunta") //talvez precise alterar para let
+    
+    if (pergunta.length < 20) {
+        alert("As perguntas devem possuir no minímo 20 caracteres")
+        //return false
+    }
+}
+
+function validaCorDeFundo() {
+    const corDeFundo = prompt("Digite a cor de fundo") //talvez precise alterar para let
+    const letrasMaiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
+                             "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    const letrasMinusculas = []
+    for (let i = 0; i < letrasMaiusculas.length; i++) {
+        let caracterMinusculo = letrasMaiusculas[i].toLowerCase()
+        letrasMinusculas.push(caracterMinusculo)
+    }
+    const numeros = ["0","1","2","3","4","5","6","7","8","9"]
+
+    if (corDeFundo.length === 7 && corDeFundo[0] === "#") {
+        //console.log("passou no primeiro")
+        for (let i = 1; i < corDeFundo.length; i++) {
+            if (letrasMaiusculas.indexOf(corDeFundo[i]) > -1 || letrasMinusculas.indexOf(corDeFundo[i]) > -1 || numeros.indexOf(corDeFundo[i]) > -1) console.log("é aceito")
+            else console.log('nao aceitou') //return false
+        }
+    }
+    else console.log("nao aceitou") //return false
+}
+
+/*Acho que nao vai precisar dessa
+function validaResposta() {
+    const resposta = prompt("Digite a resposta") //talvez precise alterar para let
+
+    if (resposta === "") { //talvez precise acrescentar null e undefined para cobrir tudo
+        console.log("resposta ta vazia")
+        // return false
+    }
+}*/
+
+function validaURL() {
+    const texto = prompt("Digite a url") //talvez precise alterar para let
+    try {
+     let url = new URL(texto)
+     console.log("é uma url")
+    } 
+    catch(err) {
+       console.log("não é uma url")
+    }
+ }
+
+ function validaRespostaCorreta() {
+    let respostaCorreta = prompt("Digite a resposta correta") ;  respostaCorreta = respostaCorreta.trim() ;
+    if (respostaCorreta === "" ) console.log("resposta correta ta vazia") 
+ }
+
+ function validaQtdRespostasIncorretas() {
+    const respostasIncorretas = []
+    let resposta1 = prompt("Digite a resposta 1") ; resposta1 = resposta1.trim() ;
+    let resposta2 = prompt("Digite a resposta 2") ; resposta2 = resposta2.trim() ;
+    let resposta3 = prompt("Digite a resposta 3") ; resposta3 = resposta3.trim() ;
+    respostasIncorretas.push(resposta1, resposta2, resposta3)
+    console.log(respostasIncorretas)
+    if (respostasIncorretas[0] === "" && respostasIncorretas[1] === "" && respostasIncorretas[2] === "") {
+        console.log("precisa de pelo menos uma resposta incorreta")
+    }
+ }
+ 
+ //FIM DA CRIAÇÃO DA VALIDAÇÃO DE PERGUNTAS - CLAUDIO
+
+//CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
+
+function validaTituloNivel() {
+    const tituloNivel = prompt("Digite o titulo")
+    if (tituloNivel.length < 10) console.log("titulo negado")
+}
+
+function porcentagemAcerto() {
+    let porcentagemNivel = prompt ("Digite a porcentagem minima")
+    porcentagemNivel = Number(porcentagemNivel)
+    console.log(porcentagemNivel)
+    if (porcentagemNivel < 0 || porcentagemNivel > 100 || isNaN(porcentagemNivel)) {console.log("porcentagem negada")}
+}
+
+//Validação da url aproveitar a funcao ja feita la em cima
+
+function validaDescricaoNivel() {
+    const descricaoNivel = prompt("Digite o titulo")
+    if (descricaoNivel.length < 30) {
+        console.log("descrição negada")
+        return false
+    }
+}
+
+//Essa é a ideia final
+function validaTudo() {
+    if (validaDescricaoNivel() == false) {
+        console.log("parou funcao")
+        return
+    }
+    console.log("continou")
+}
+
+//FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
