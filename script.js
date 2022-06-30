@@ -285,7 +285,7 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             for (let i = 1; i < Number(criarNmrPerguntas.value); i++) {
                 document.querySelector('.perguntasCriar').innerHTML += `<div class="caixaInputMini">
                 <span>Pergunta ${i + 1}</span>
-                <ion-icon name="create-outline" onclick="expandirCaixaInputP(this)"></ion-icon>
+                <ion-icon name="create-outline" onclick="validaTudoPerguntas(this)"></ion-icon>
             </div>`
             }
 
@@ -461,7 +461,7 @@ function trabalhandoNisso() {
 function validaPergunta() { 
     const perguntaCriada = document.querySelector("input.textoPergunta").value 
     
-    if (pergunta.length < 20) {
+    if (perguntaCriada.length < 20) {
         alert("As perguntas devem possuir no minímo 20 caracteres")
         return false
     }
@@ -481,8 +481,12 @@ function validaCorDeFundo() {
     if (corDeFundo.length === 7 && corDeFundo[0] === "#") {
         //console.log("passou no primeiro")
         for (let i = 1; i < corDeFundo.length; i++) {
-            if (letrasMaiusculas.indexOf(corDeFundo[i]) > -1 || letrasMinusculas.indexOf(corDeFundo[i]) > -1 || numeros.indexOf(corDeFundo[i]) > -1) console.log("é aceito")
-            else return false
+            if (letrasMaiusculas.indexOf(corDeFundo[i]) > -1 || letrasMinusculas.indexOf(corDeFundo[i]) > -1 || numeros.indexOf(corDeFundo[i]) > -1) console.log("ok")
+            else {
+                alert("Digite uma cor de fundo corretamente")
+                return false
+            }
+
         }
     }
     else return false
@@ -499,15 +503,39 @@ function validaResposta() {
 }*/
 
 function validaURL() {
-    const texto = document.querySelector("input.respostaCorretaURL").value //talvez precise alterar para let
-    try {
-     let url = new URL(texto)
-     console.log("é uma url")
-    } 
+    const urlrespostaCorreta = document.querySelector("input.respostaCorretaURL").value
+    const urlrespostaIncorreta1 = document.querySelector("input.respostaIncorretaURL_1").value
+    const urlrespostaIncorreta2 = document.querySelector("input.respostaIncorretaURL_2").value
+    const urlrespostaIncorreta3 = document.querySelector("input.respostaIncorretaURL_3").value
+    const resposta1 = document.querySelector("input.respostaIncorreta_1").value 
+    const resposta2 = document.querySelector("input.respostaIncorreta_2").value 
+    const resposta3 = document.querySelector("input.respostaIncorreta_3").value 
+
+    try {let url1 = new URL(urlrespostaCorreta) } 
     catch(err) {
-       console.log("não é uma url")
-       return false
+
+        alert("Digite o link válido para a resposta correta")
+        return false
     }
+    try {let url2 = new URL(urlrespostaIncorreta1)}
+    catch(err) {
+        if (resposta1.trim() === "" && urlrespostaIncorreta1.trim() === "") {return true}
+        alert("Digite o link vaĺido para a resposta incorreta 1")
+        return false
+    }
+    try {let url3 = new URL(urlrespostaIncorreta2)}
+    catch(err) {
+        if (resposta2.trim() === "" && urlrespostaIncorreta2.trim() === "") {return true}
+        alert("Digite o link vaĺido para a resposta incorreta 2")
+        return false
+    }
+    try {let url4 = new URL(urlrespostaIncorreta3)}
+    catch(err) {
+        if (resposta3.trim() === "" && urlrespostaIncorreta3.trim() === "") {return true}
+        alert("Digite o link vaĺido para a resposta incorreta 3")
+        return false
+    }
+    
  }
 
  function validaRespostaCorreta() {
@@ -523,47 +551,73 @@ function validaURL() {
     respostasIncorretas.push(resposta1, resposta2, resposta3)
     console.log(respostasIncorretas)
     if (respostasIncorretas[0] === "" && respostasIncorretas[1] === "" && respostasIncorretas[2] === "") {
-        console.log("precisa de pelo menos uma resposta incorreta")
+        alert("Precisa de pelo menos uma resposta incorreta")
         return false
     }
  }
+
+ //Essa é a ideia final
+function validaTudoPerguntas() {
+    if (validaPergunta() === false ||
+        validaCorDeFundo() === false ||
+        validaURL() === false ||
+        validaRespostaCorreta() === false || 
+        validaQtdRespostasIncorretas() === false) {
+        alert("Digite corretamente")
+        return
+    }
+    console.log("passou")
+    //Inserir a funcao para abrir as outras caixas de perguntas
+}
  
- //FIM DA CRIAÇÃO DA VALIDAÇÃO DE PERGUNTAS - CLAUDIO
+//FIM DA CRIAÇÃO DA VALIDAÇÃO DE PERGUNTAS - CLAUDIO
 
 //CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
 
 function validaTituloNivel() {
     const tituloNivel = prompt("Digite o titulo")
-    if (tituloNivel.length < 10) console.log("titulo negado")
+    if (tituloNivel.length < 10) {
+        alert("Digite pelo menos 10 caracteres para o título") 
+        return false
+    }
 }
 
 function porcentagemAcerto() {
     let porcentagemNivel = prompt ("Digite a porcentagem minima")
     porcentagemNivel = Number(porcentagemNivel)
     console.log(porcentagemNivel)
-    if (porcentagemNivel < 0 || porcentagemNivel > 100 || isNaN(porcentagemNivel)) {console.log("porcentagem negada")}
-}
-
-//Validação da url aproveitar a funcao ja feita la em cima
-
-function validaDescricaoNivel() {
-    const descricaoNivel = prompt("Digite o titulo")
-    if (descricaoNivel.length < 30) {
-        console.log("descrição negada")
+    if (porcentagemNivel < 0 || porcentagemNivel > 100 || isNaN(porcentagemNivel)) {
+        alert("Digite uma porcentagem entre 0 e 100")
         return false
     }
 }
 
-//Essa é a ideia final
-function validaTudoPerguntas() {
-    if (validaPergunta() == false ||
-        validaCorDeFundo() == false ||
-        validaURL() ||
-        validaRespostaCorreta() || 
-        validaQtdRespostasIncorretas()) {
-        alert("Digite corretamente")
-        return
+function validaUrlNivel() {
+    const urlNivel = ""
+
+    try {let url = new URL(urlNivel) } 
+    catch(err) {
+        alert("Digite o link válido ")
+        return false
     }
+}
+
+function validaDescricaoNivel() {
+    const descricaoNivel = prompt("Digite o titulo")
+    if (descricaoNivel.length < 30) {
+        alert("Digite pelo menos 30 caracteres para a descrição do nível")
+        return false
+    }
+}
+
+
+function validaTudoNiveis() {
+    if (validaTituloNivel() === false ||
+        porcentagemAcerto() === false ||
+        validaUrlNivel() === false ||
+        validaDescricaoNivel() === false) {
+            return
+        }
     console.log("passou")
 }
 
