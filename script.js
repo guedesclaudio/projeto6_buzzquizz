@@ -336,7 +336,7 @@ function goToCriarNiveis() {
 
 //
 
-function getInfoPergunta(){
+function getInfoPergunta() {
     textoPergunta = document.querySelector(".textoPergunta")
     corFundoPergunta = document.querySelector(".corFundoPergunta")
     respostaCorreta = document.querySelector(".respostaCorreta")
