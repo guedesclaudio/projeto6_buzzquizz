@@ -182,7 +182,7 @@ function goToCriar() {
     `<div class="infoCriar">
         <span>Comece pelo começo</span>
         <div class="caixaInput">
-            <input class="titulo" type="text" placeholder="  Escolha o titulo do seu quizz">
+            <input class='titulo' type="text" placeholder="  Escolha o titulo do seu quizz">
             <input class='imageURL' type="text" placeholder="  Insira a URL da imagem do seu quizz">
             <input class='nmrPerguntas' type="text" placeholder="  Quantas perguntas terá seu quizz?">
             <input class='nmrNiveis' type="text" placeholder="  Quantos níveis terá seu quizz?">

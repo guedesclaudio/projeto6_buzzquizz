@@ -34,10 +34,12 @@ body {
     cursor: pointer;
 }
 
-/* cortar display none no fim do projeto */
-
 .hide {
     display: none;
+}
+
+ion-icon {
+    color: black;
 }
 
 /*FIM MAIN*/
@@ -225,6 +227,7 @@ body {
 .caixaInput {
     background-color: #FFFFFF;
     width: 35vw;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -260,7 +263,7 @@ body {
 }
 
 .infoCriar button {
-    margin-top: 30px;
+    margin-bottom: 10px;
     width: 369px;
     height: 54px;
     border: none;
@@ -271,6 +274,69 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+
+/*---------------------------------------------*/
+
+.perguntasCriar {
+    margin-top: 120px;
+    width: 55vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.perguntasCriar span {
+    font-weight: 700;
+    font-size: 23px;
+    margin-bottom: 27px;
+}
+
+.perguntasCriar button {
+    margin-top: 10px;
+    width: 369px;
+    height: 54px;
+    border: none;
+    border-radius: 50px;
+    background-color: #ec362d;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+.caixaInput span {
+    width: 35vw;
+    text-align: left;
+    font-size: 17px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.caixaInputMini {
+    background-color: #FFFFFF;
+    width: 35vw;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 15px 5px 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.caixaInputMini span {
+    width: auto;
+    text-align: left;
+    font-size: 17px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.caixaInputMini ion-icon {
+    margin-bottom: 7px
 }
 
 /*FIM CRIAÇÃO*/
