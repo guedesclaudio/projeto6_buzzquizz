@@ -601,7 +601,7 @@ function validaDescricaoNivel() {
 }
 
 
-function validaTudoNiveis() {
+function validaTudoNiveis(icone) {
     if (validaTituloNivel() === false ||
         porcentagemAcerto() === false ||
         validaUrlNivel() === false ||
@@ -609,6 +609,7 @@ function validaTudoNiveis() {
             return
         }
     console.log("passou")
+    expandirCaixaInputN(icone)
 }
 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
