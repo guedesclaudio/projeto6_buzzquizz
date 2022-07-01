@@ -37,6 +37,9 @@ let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
 let indice = 0
+let validadorPerguntas = []
+let validadorNiveis = []
+let liberado
 
 /* variáveis de criação */
 let criarTitulo 
@@ -306,6 +309,12 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
 //
 
 function goToCriarNiveis() { 
+
+    /*
+    if (liberado != true) {
+        //implementar um codigo novo, pois nao ta funcionando
+    }*/
+    
     document.querySelector('.criacao').innerHTML = `   <div class="niveisCriar">
     <span>Agora, decida os níveis</span>
     <div class="caixaInput">
@@ -480,7 +489,10 @@ function validaCorDeFundo() {
 
         }
     }
-    else return false
+    else {
+        alert("Digite uma cor de fundo corretamente")
+        return false
+    }
 }
 
 /*Acho que nao vai precisar dessa
@@ -530,7 +542,10 @@ function validaURL() {
 
  function validaRespostaCorreta() {
     let respostaCorreta = document.querySelector("input.respostaCorreta").value ;  respostaCorreta = respostaCorreta.trim() ;
-    if (respostaCorreta === "" ) return false 
+    if (respostaCorreta === "" ) {
+        alert("Digite uma resposta correta")
+        return false
+    } 
  }
 
  function validaQtdRespostasIncorretas() {
@@ -546,34 +561,52 @@ function validaURL() {
     }
  }
 
- //Essa é a ideia final
 function validaTudoPerguntas(icone) {
     if (validaPergunta() === false ||
         validaCorDeFundo() === false ||
         validaURL() === false ||
         validaRespostaCorreta() === false || 
         validaQtdRespostasIncorretas() === false) {
-        alert("Digite corretamente")
+        //alert("Digite corretamente")
         return
     }
+    validadorPerguntas.push("completo")
     console.log("passou")
     expandirCaixaInputP(icone)
 }
+/*
+function validaTudoPerguntas2() {
+    if (validaPergunta() === false ||
+        validaCorDeFundo() === false ||
+        validaURL() === false ||
+        validaRespostaCorreta() === false || 
+        validaQtdRespostasIncorretas() === false) {
+        //alert("Digite corretamente")
+        return
+    }
+    validadorPerguntas.push("completo")
+    console.log("passou")
+    if (validadorPerguntas.length === criarNmrPerguntas.value) {
+        console.log("ta liberado")
+        liberado = true
+        return
+    }
+}*/
  
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DE PERGUNTAS - CLAUDIO
 
 //CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
 
 function validaTituloNivel() {
-    const tituloNivel = prompt("Digite o titulo")
-    if (tituloNivel.length < 10) {
+    const nivelTitulo = document.querySelector(".tituloNivel").value
+    if (nivelTitulo.length < 10) {
         alert("Digite pelo menos 10 caracteres para o título") 
         return false
     }
 }
 
 function porcentagemAcerto() {
-    let porcentagemNivel = prompt ("Digite a porcentagem minima")
+    let porcentagemNivel = document.querySelector(".minValueNivel").value
     porcentagemNivel = Number(porcentagemNivel)
     console.log(porcentagemNivel)
     if (porcentagemNivel < 0 || porcentagemNivel > 100 || isNaN(porcentagemNivel)) {
@@ -583,9 +616,9 @@ function porcentagemAcerto() {
 }
 
 function validaUrlNivel() {
-    const urlNivel = ""
+    const nivelURL = document.querySelector(".urlNivel").value
 
-    try {let url = new URL(urlNivel) } 
+    try {let url = new URL(nivelURL) } 
     catch(err) {
         alert("Digite o link válido ")
         return false
@@ -593,7 +626,7 @@ function validaUrlNivel() {
 }
 
 function validaDescricaoNivel() {
-    const descricaoNivel = prompt("Digite o titulo")
+    const descricaoNivel = document.querySelector(".descricaoNivel").value
     if (descricaoNivel.length < 30) {
         alert("Digite pelo menos 30 caracteres para a descrição do nível")
         return false
@@ -608,6 +641,7 @@ function validaTudoNiveis(icone) {
         validaDescricaoNivel() === false) {
             return
         }
+    validadorNiveis.push("completo")
     console.log("passou")
     expandirCaixaInputN(icone)
 }
