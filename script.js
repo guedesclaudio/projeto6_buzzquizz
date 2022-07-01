@@ -107,6 +107,7 @@ function ObterQuizzes(){
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
 //elemento.data[i] === quizzesArray[i]
 function ObterQuizzesSucesso(elemento){
+    console.log(elemento)
     for(i = 0; i < elemento.data.length; i++){
         quizzesArray.push(elemento.data[i])
         const quizzCardtemplate = `
@@ -226,30 +227,27 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
     proximonumero = (NumeroDaQuestao + 1)
     elementoatual = elemento.parentNode.parentNode.parentNode.querySelector('.Pergunta')
     ultimoelemento = document.querySelector('.questao'+(RespostasArray.length - 1)).parentNode.querySelector('.Pergunta')
-    if(elementoatual === ultimoelemento){
-        ResultadoQuiz()
+    if(elementoatual === ultimoelemento ){
+        if(document.querySelector('.Resultado') != undefined){
+            return
+        }
+        setTimeout(ResultadoQuiz, 2000)
         return
     }
-    proximoelemento = document.querySelector('.questao'+proximonumero)//.parentNode.querySelector('.Pergunta')
+    proximoelemento = document.querySelector('.questao'+proximonumero)
     setTimeout(scroll, 2000)
-    
 }
 
-function scroll (){
-    proximoelemento.scrollIntoView({behavior: "smooth", block:'end'})
-}
-function scrollResultado(){
-    document.querySelector('.imgresultado').scrollIntoView({behavior: "smooth", block:'center'})
-}
+
 //faltando resolver erro quando clica no botao reiniciar
 //renderizar dinamicamente todos os niveis calculando o resultado
 //pegar a cor do background da pergunta no objeto dos quizzes
 //degrade preto imagem banner
 
 function ResultadoQuiz(){
-    console.log(quizzid.id - 1)
+    console.log(document.querySelector('.quiz'))
     document.querySelector('.quiz').innerHTML += `
-        <div class="Resultado">
+        <div class="Resultado criado">
             <div class="tituloResultado">${quizzid.levels[0].title}</div>
             <div class="textoResultado">
                 <img class="imgresultado" src="${quizzid.levels[0].image}" alt="">
@@ -260,9 +258,14 @@ function ResultadoQuiz(){
                 <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
             </div>
         </div>`
-        setTimeout(scrollResultado, 2000)
+        scrollResultado()
 }
-
+function scroll (){
+    proximoelemento.scrollIntoView({behavior: "smooth", block:'end'})
+}
+function scrollResultado(){
+    document.querySelector('.imgresultado').scrollIntoView({behavior: "smooth", block:'center'})
+}
 
 /*FIM QUIZ*/
 
