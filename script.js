@@ -329,7 +329,7 @@ function goToCriarNiveis() {
         for (let i = 1; i < Number(criarNmrNiveis.value); i++) {
             document.querySelector('.niveisCriar').innerHTML += `<div class="caixaInputMini">
             <span>Nível ${i + 1}</span>
-            <ion-icon name="create-outline" onclick="expandirCaixaInputN(this)"></ion-icon>
+            <ion-icon name="create-outline" onclick="validaTudoNiveis(this)"></ion-icon>
         </div>`
         }
 
