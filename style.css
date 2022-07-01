@@ -253,6 +253,7 @@ ion-icon {
     flex-direction: column;
     width: 700px;
     margin-bottom: 300px;
+    word-break: break-word;
 }
 .tituloResultado{
     height: 100px;
@@ -266,15 +267,16 @@ ion-icon {
 }
 .textoResultado{
     box-sizing: border-box;
-    width: 100%;
     display: flex;
     color: #484848;
     font-weight: 700;
     font-size: 19px;
     margin-top: 20px;
+    
 }
 .textoResultado img, .textoResultado p{
     width: 350px;
+    word-break: break-word;
 }
 .textoResultado p{
     margin-left: 20px;
