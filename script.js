@@ -75,6 +75,7 @@ let nmrPergunta
 
 // variáveis criar níveis //
 let tituloNivel
+const minValueFirstNivel = 0 //fixei o valor do primeiro nivel
 let minValueNivel
 let urlNivel
 let decricaoNivel
@@ -314,8 +315,8 @@ function goToCriar() {
 //
 
 function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- se foram preenchidos corretamente.
-        if (criarTitulo.value.length > 65 || criarTitulo.value.length < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
-            alert("Os dados são inválidos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres")
+        if (criarTitulo.value.length > 65 || criarTitulo.value.length < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3 || validaUrlInicio() === false) {
+            alert("Os dados são inválidos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres\nLink precisa ser válido")
         } else {
             document.querySelector('.criacao').innerHTML = `<div class="perguntasCriar">
             <span>Crie suas perguntas</span>
@@ -373,7 +374,7 @@ function goToCriarNiveis() {
         <span>Nível 1</span>
         
         <input class='tituloNivel' type="text" placeholder="  Título do nivel">
-        <input class='minValueNivel' type="text" placeholder="  % mínima de acerto">
+        <input class='minValueNivel' type="text" placeholder="  Nesse nível a % mínima de acerto é 0" value="0" disabled> 
         <input class='urlNivel' type="text" placeholder="  URL da imagem do nível">
         <input class='descricaoNivel' type="text" placeholder="  Descrição do nível">
         </div>
@@ -730,3 +731,12 @@ function validaTudoNiveis(icone) {
 }
 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
+
+function validaUrlInicio() {
+    const urlInicio = document.querySelector("input.imageURL").value
+
+    try {let url = new URL(urlInicio) } 
+    catch(err) {
+        return false
+    }
+}
