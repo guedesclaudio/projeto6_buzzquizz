@@ -103,6 +103,10 @@ ion-icon {
     margin: 0 0 1px 8px;
 }
 
+.seusQuizzes span ion-icon:hover{
+    filter: contrast(80%);
+}
+
 .quizzCardsUser {
     display: flex;
     flex-wrap: wrap;
@@ -361,6 +365,11 @@ ion-icon {
     cursor: pointer;
 }
 
+.infoCriar button:hover{
+    filter: contrast(80%);
+}
+
+
 /*---------------------------------------------*/
 
 .perguntasCriar {
@@ -392,6 +401,11 @@ ion-icon {
     margin-bottom: 50px;
 }
 
+.perguntasCriar button:hover{
+    filter: contrast(80%);
+}
+
+
 /*---------------------------------------------*/
 
 .niveisCriar {
@@ -422,6 +436,11 @@ ion-icon {
     cursor: pointer;
     margin-bottom: 50px;
 }
+
+.niveisCriar button:hover{
+    filter: contrast(80%);
+}
+
 
 /*---------------------------------------------*/
 
@@ -492,6 +511,11 @@ ion-icon {
     cursor: pointer;
     margin-bottom: 25px;
 }
+
+.sucessoCriar button:hover{
+    filter: contrast(80%);
+}
+
 
 .previewCard {
     width: 35vw;

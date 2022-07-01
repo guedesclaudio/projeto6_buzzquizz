@@ -45,7 +45,7 @@ let ultimoelemento
 let proximoelemento
 let quizzid
 let i
-let validadorPerguntas = []
+let validadorPerguntas = 0
 let validadorNiveis = []
 let liberado
 
@@ -331,7 +331,7 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             </div>`
             }
 
-            document.querySelector('.perguntasCriar').innerHTML += `<button class="goToNiveis" onclick="goToCriarNiveis()">Prosseguir para criar níveis</button>
+            document.querySelector('.perguntasCriar').innerHTML += `<div class="botao"><button class="goToNiveis" onclick="termineDePreencher()">Prosseguir para criar níveis</button></div>
             </div>`
 
             //------------------------------------//
@@ -351,11 +351,6 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
 //
 
 function goToCriarNiveis() { 
-
-    /*
-    if (liberado != true) {
-        //implementar um codigo novo, pois nao ta funcionando
-    }*/
     
     document.querySelector('.criacao').innerHTML = `   <div class="niveisCriar">
     <span>Agora, decida os níveis</span>
@@ -378,6 +373,12 @@ function goToCriarNiveis() {
         document.querySelector('.niveisCriar').innerHTML += `<button class="goToSucesso" onclick="goToSucessoCriar()">Finalizar Quizz</button>
         </div>`
 
+}
+
+//
+
+function termineDePreencher() {
+    alert("Termine de preencher as opções antes de avançar.")
 }
 
 //
@@ -412,7 +413,6 @@ function expandirCaixaInputP(iconeExpandir) {
     nmrPergunta = miniCaixaInput.querySelector("span").innerHTML
     console.log(DOM_perguntas)
     for(let i = 0; i < DOM_perguntas.length; i++){
-        console.log(DOM_perguntas[i])
         if (DOM_perguntas[i].classList.contains("caixaInput")){
             toggleCaixaInput(DOM_perguntas[i])
         }
@@ -611,11 +611,25 @@ function validaTudoPerguntas(icone) {
         validaQtdRespostasIncorretas() === false) {
         //alert("Digite corretamente")
         return
+    }else {
+        validadorPerguntas += 1
     }
-    validadorPerguntas.push("completo")
-    console.log("passou")
-    expandirCaixaInputP(icone)
+    DOM_perguntas = document.querySelectorAll(".perguntasCriar div");
+    console.log(validadorPerguntas)
+    console.log(DOM_perguntas.length)
+    if (validadorPerguntas < DOM_perguntas.length - 1){
+        expandirCaixaInputP(icone)
+    }
+    if (validadorPerguntas === DOM_perguntas.length - 2){
+        document.querySelector(".botao").innerHTML = `<button class="goToNiveis" onclick="validaTudoPerguntas()">Prosseguir para criar níveis</button>`
+    } else if (validadorPerguntas === DOM_perguntas.length-1) {
+        goToCriarNiveis()
+    }
+    
+    
 }
+
+
 /*
 function validaTudoPerguntas2() {
     if (validaPergunta() === false ||
