@@ -254,7 +254,7 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 //faltando resolver erro quando clica no botao reiniciar
-//calculando o resultado
+//renderizar dinamicamente o nivel
 //pegar a cor do background da pergunta no objeto dos quizzes
 
 
