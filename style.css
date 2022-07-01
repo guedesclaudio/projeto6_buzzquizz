@@ -218,8 +218,66 @@ ion-icon {
 }
 .errou{
     color: red;
-
 }
+.Resultado{
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    margin-bottom: 300px;
+}
+.tituloResultado{
+    height: 100px;
+    background-color: #EC362D;
+    font-size: 23px;
+    font-weight: 700;
+    color: #FFFFFF;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.textoResultado{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    color: #484848;
+    font-weight: 700;
+    font-size: 19px;
+    margin-top: 20px;
+}
+.textoResultado img, .textoResultado p{
+    width: 350px;
+}
+.textoResultado p{
+    margin-left: 20px;
+}
+.botoesResultado{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 400;
+    font-size: 21px;
+    margin-top: 80px;
+}
+.btnReiniciar{
+    background-color: #EC362D;
+    width: 260px;
+    height: 52px;
+    border-radius: 15px;
+    color: #FFF5F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.btnVoltarHome{
+    color: #818181;
+    margin-top: 18px;
+    cursor: pointer;
+}
+.btnReiniciar:hover, .btnVoltarHome:hover{
+    filter: contrast(80%);
+}
+
 /*FIM QUIZ*/
 
 

@@ -37,7 +37,14 @@ let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
 let indice = 0
-
+let elementoatual
+let NumeroDaQuestao
+let proximonumero
+let ClasseNumeroDaQuestao
+let ultimoelemento
+let proximoelemento
+let quizzid
+let i
 /* variáveis de criação */
 let criarTitulo 
 let criarImagem 
@@ -96,7 +103,7 @@ function ObterQuizzes(){
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
 //elemento.data[i] === quizzesArray[i]
 function ObterQuizzesSucesso(elemento){
-    for(let i = 0; i < elemento.data.length; i++){
+    for(i = 0; i < elemento.data.length; i++){
         quizzesArray.push(elemento.data[i])
         const quizzCardtemplate = `
         <div class="quizzCard" id="${i}" onclick="goToQuizz(this)">
@@ -118,24 +125,27 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
+    
+    RespostasArray = []
+    quizzid = quizzesArray[quizz.id]
     toggleHome()
     document.querySelector('.quiz').innerHTML = `
         <div class="ImgTopoQuiz">
-            <img class="ImagemQuizBanner" src="${quizzesArray[quizz.id].image}" alt="">
-            <h2 class="TituloQuizBanner">${quizzesArray[quizz.id].title}</h2>
+            <img class="ImagemQuizBanner" src="${quizzid.image}" alt="">
+            <h2 class="TituloQuizBanner">${quizzid.title}</h2>
         </div>`
         //for para adicionar todas as perguntas
-    for(indice= 0 ; indice< quizzesArray[quizz.id].questions.length ; indice++){
+    for(indice= 0 ; indice< quizzid.questions.length ; indice++){
         RespostasArray.push([])
         //colocando as respostas em uma array e embaralhando a array para a ordem ficar aleatória
-        for(let index= 0 ; index< quizzesArray[quizz.id].questions[indice].answers.length ; index++){
-            RespostasArray[indice].push(quizzesArray[quizz.id].questions[indice].answers[index])
+        for(let index= 0 ; index< quizzid.questions[indice].answers.length ; index++){
+            RespostasArray[indice].push(quizzid.questions[indice].answers[index])
         }
         RespostasArray[indice].sort(comparador)
         document.querySelector('.quiz').innerHTML += `
             <div class="QeAQuiz">
                 <div class="Pergunta">
-                    <h3>${quizzesArray[quizz.id].questions[indice].title}</h3>
+                    <h3>${quizzid.questions[indice].title}</h3>
                 </div>
                 <div class="Resposta questao${indice}">
                     <div class="RespostaColuna1">
@@ -170,12 +180,12 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
                     
             }
     }
-    
+    document.querySelector('.ImgTopoQuiz').scrollIntoView({behavior: "smooth", block:'center'})
 }
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
 function VerificarResposta(elemento){ //verificar jeito melhor de fazer
-    let ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
+    ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
     if(elemento.classList.contains('esbranquicado') === false){
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
@@ -207,20 +217,48 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
             document.querySelector('.'+ClasseNumeroDaQuestao).classList.add('errou')
             break
     }
-    let NumeroDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
+    NumeroDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
     NumeroDaQuestao = Number(NumeroDaQuestao)
-    const proximonumero = (NumeroDaQuestao + 1)
-    const elementoatual = elemento.parentNode.parentNode.parentNode.querySelector('.Pergunta')
-    const ultimoelemento = document.querySelector('.questao'+(RespostasArray.length - 1)).parentNode.querySelector('.Pergunta')
+    proximonumero = (NumeroDaQuestao + 1)
+    elementoatual = elemento.parentNode.parentNode.parentNode.querySelector('.Pergunta')
+    ultimoelemento = document.querySelector('.questao'+(RespostasArray.length - 1)).parentNode.querySelector('.Pergunta')
     if(elementoatual === ultimoelemento){
+        ResultadoQuiz()
         return
     }
-    const proximoelemento = document.querySelector('.questao'+proximonumero)//.parentNode.querySelector('.Pergunta')
-    function scroll (){
-        proximoelemento.scrollIntoView({behavior: "smooth", block:'end'})
-    }
+    proximoelemento = document.querySelector('.questao'+proximonumero)//.parentNode.querySelector('.Pergunta')
     setTimeout(scroll, 2000)
+    
 }
+
+function scroll (){
+    proximoelemento.scrollIntoView({behavior: "smooth", block:'end'})
+}
+function scrollResultado(){
+    document.querySelector('.imgresultado').scrollIntoView({behavior: "smooth", block:'center'})
+}
+//faltando resolver erro quando clica no botao reiniciar
+//renderizar dinamicamente todos os niveis calculando o resultado
+//pegar a cor do background da pergunta no objeto dos quizzes
+//degrade preto imagem banner
+
+function ResultadoQuiz(){
+    console.log(quizzid.id - 1)
+    document.querySelector('.quiz').innerHTML += `
+        <div class="Resultado">
+            <div class="tituloResultado">${quizzid.levels[0].title}</div>
+            <div class="textoResultado">
+                <img class="imgresultado" src="${quizzid.levels[0].image}" alt="">
+                <p>${quizzid.levels[0].text}</p>
+            </div>
+            <div class="botoesResultado">
+                <div class="btnReiniciar" id="${quizzid.id - 1}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
+                <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
+            </div>
+        </div>`
+        setTimeout(scrollResultado, 2000)
+}
+
 
 /*FIM QUIZ*/
 
