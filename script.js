@@ -46,7 +46,7 @@ let proximoelemento
 let quizzid
 let i
 let validadorPerguntas = 0
-let validadorNiveis = []
+let validadorNiveis = 0
 let liberado
 
 /* variáveis de criação */
@@ -78,6 +78,8 @@ let urlNivel
 let decricaoNivel
 
 let nmrNivel
+let minValueCheck = []
+let porcentagemNivel
 
 /*FIM GLOBAIS*/
 
@@ -370,7 +372,7 @@ function goToCriarNiveis() {
         </div>`
         }
 
-        document.querySelector('.niveisCriar').innerHTML += `<button class="goToSucesso" onclick="goToSucessoCriar()">Finalizar Quizz</button>
+        document.querySelector('.niveisCriar').innerHTML += `<div class="botao"><button class="goToSucesso" onclick="termineDePreencher()">Finalizar Quizz</button></div>
         </div>`
 
 }
@@ -395,6 +397,26 @@ function getInfoPergunta(){
     respostaIncorreta_3 = document.querySelector(".respostaIncorreta_3")
     respostaIncorretaURL_3 = document.querySelector(".respostaIncorretaURL_3")
 }
+
+//
+
+function quizPerguntaPush() {
+    quizObjeto.questions[validadorPerguntas].title = textoPergunta
+    quizObjeto.questions[validadorPerguntas].color = corFundoPergunta
+    quizObjeto.questions[validadorPerguntas].answers[0].text = respostaCorreta
+    quizObjeto.questions[validadorPerguntas].answers[0].image = respostaCorretaURL
+    quizObjeto.questions[validadorPerguntas].answers[0].isCorrectAnswer = true
+    quizObjeto.questions[validadorPerguntas].answers[1].text = respostaIncorreta_1
+    quizObjeto.questions[validadorPerguntas].answers[1].image = respostaIncorretaURL_1
+    quizObjeto.questions[validadorPerguntas].answers[1].isCorrectAnswer = false
+    quizObjeto.questions[validadorPerguntas].answers[2].text = respostaIncorreta_2
+    quizObjeto.questions[validadorPerguntas].answers[2].image = respostaIncorretaURL_2
+    quizObjeto.questions[validadorPerguntas].answers[2].isCorrectAnswer = false
+    quizObjeto.questions[validadorPerguntas].answers[3].text = respostaIncorreta_3
+    quizObjeto.questions[validadorPerguntas].answers[3].image = respostaIncorretaURL_3
+    quizObjeto.questions[validadorPerguntas].answers[3].isCorrectAnswer = false
+    console.log(quizObjeto)
+}   
 
 //
 
@@ -612,11 +634,11 @@ function validaTudoPerguntas(icone) {
         //alert("Digite corretamente")
         return
     }else {
+        getInfoPergunta()
+        quizPerguntaPush()
         validadorPerguntas += 1
     }
     DOM_perguntas = document.querySelectorAll(".perguntasCriar div");
-    console.log(validadorPerguntas)
-    console.log(DOM_perguntas.length)
     if (validadorPerguntas < DOM_perguntas.length - 1){
         expandirCaixaInputP(icone)
     }
@@ -629,26 +651,6 @@ function validaTudoPerguntas(icone) {
     
 }
 
-
-/*
-function validaTudoPerguntas2() {
-    if (validaPergunta() === false ||
-        validaCorDeFundo() === false ||
-        validaURL() === false ||
-        validaRespostaCorreta() === false || 
-        validaQtdRespostasIncorretas() === false) {
-        //alert("Digite corretamente")
-        return
-    }
-    validadorPerguntas.push("completo")
-    console.log("passou")
-    if (validadorPerguntas.length === criarNmrPerguntas.value) {
-        console.log("ta liberado")
-        liberado = true
-        return
-    }
-}*/
- 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DE PERGUNTAS - CLAUDIO
 
 //CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
@@ -662,7 +664,7 @@ function validaTituloNivel() {
 }
 
 function porcentagemAcerto() {
-    let porcentagemNivel = document.querySelector(".minValueNivel").value
+    porcentagemNivel = document.querySelector(".minValueNivel").value
     porcentagemNivel = Number(porcentagemNivel)
     console.log(porcentagemNivel)
     if (porcentagemNivel < 0 || porcentagemNivel > 100 || isNaN(porcentagemNivel)) {
@@ -696,10 +698,22 @@ function validaTudoNiveis(icone) {
         validaUrlNivel() === false ||
         validaDescricaoNivel() === false) {
             return
+        } else {
+            getInfoNivel()
+            minValueCheck.push(porcentagemNivel)
+            validadorNiveis += 1
         }
-    validadorNiveis.push("completo")
-    console.log("passou")
-    expandirCaixaInputN(icone)
+        DOM_niveis = document.querySelectorAll(".niveisCriar div");
+        if (validadorNiveis < DOM_niveis.length - 1) {
+            expandirCaixaInputN(icone)
+        }
+        if (validadorNiveis === DOM_niveis.length - 2) {
+            document.querySelector(".botao").innerHTML = `<button class="goToSucesso" onclick="validaTudoNiveis()">Finalizar Quizz</button>`
+        } else if (validadorNiveis === DOM_niveis.length - 1) {
+            goToSucessoCriar()
+        }
+       
+        
 }
 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
