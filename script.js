@@ -148,7 +148,7 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
         }
         RespostasArray[indice].sort(comparador)
         document.querySelector('.quiz').innerHTML += `
-            <div class="QeAQuiz">
+            <div class="QeAQuiz nmrquestao${indice} hide">
                 <div class="Pergunta">
                     <h3>${quizzid.questions[indice].title}</h3>
                 </div>
@@ -186,11 +186,18 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
             }
     }
     document.querySelector('.ImgTopoQuiz').scrollIntoView({behavior: "smooth", block:'center'})
+    document.querySelector('.nmrquestao0').classList.remove('hide')
 }
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
 function VerificarResposta(elemento){ //verificar jeito melhor de fazer
     ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
+    let NmrDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
+    NmrDaQuestao = Number(NmrDaQuestao)
+    let NumeroProximaQuestao = NmrDaQuestao + 1
+    if(NumeroProximaQuestao !== indice){
+        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
+    }
     if(elemento.classList.contains('esbranquicado') === false){
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
@@ -235,6 +242,7 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
         return
     }
     proximoelemento = document.querySelector('.questao'+proximonumero)
+
     setTimeout(scroll, 2000)
 }
 
@@ -245,7 +253,9 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 //degrade preto imagem banner
 
 function ResultadoQuiz(){
+    //if(document.querySelector('.'))
     console.log(document.querySelector('.quiz'))
+
     document.querySelector('.quiz').innerHTML += `
         <div class="Resultado criado">
             <div class="tituloResultado">${quizzid.levels[0].title}</div>
