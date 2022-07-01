@@ -48,6 +48,8 @@ let i
 let validadorPerguntas = 0
 let validadorNiveis = []
 let liberado
+let QuantidadeAcertos = 0
+
 
 /* variáveis de criação */
 let criarTitulo 
@@ -107,7 +109,6 @@ function ObterQuizzes(){
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
 //elemento.data[i] === quizzesArray[i]
 function ObterQuizzesSucesso(elemento){
-    console.log(elemento)
     for(i = 0; i < elemento.data.length; i++){
         quizzesArray.push(elemento.data[i])
         const quizzCardtemplate = `
@@ -229,6 +230,9 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
             document.querySelector('.'+ClasseNumeroDaQuestao).classList.add('errou')
             break
     }
+    if(elemento.classList.contains('acertou')){
+        QuantidadeAcertos++
+    }
     NumeroDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
     NumeroDaQuestao = Number(NumeroDaQuestao)
     proximonumero = (NumeroDaQuestao + 1)
@@ -248,17 +252,16 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 //faltando resolver erro quando clica no botao reiniciar
-//renderizar dinamicamente todos os niveis calculando o resultado
+//calculando o resultado
 //pegar a cor do background da pergunta no objeto dos quizzes
-//degrade preto imagem banner
+
 
 function ResultadoQuiz(){
-    //if(document.querySelector('.'))
-    console.log(document.querySelector('.quiz'))
-
+    let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
+    PorcentagemAcertos = PorcentagemAcertos.toFixed(0)
     document.querySelector('.quiz').innerHTML += `
         <div class="Resultado criado">
-            <div class="tituloResultado">${quizzid.levels[0].title}</div>
+            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[0].title}</div>
             <div class="textoResultado">
                 <img class="imgresultado" src="${quizzid.levels[0].image}" alt="">
                 <p>${quizzid.levels[0].text}</p>
