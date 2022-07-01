@@ -17,7 +17,16 @@ let quizObjeto = {
 let templateQuestion = {
         title: "",
         color: "#123456",
-        answers: []
+        answers: [{
+            text: "",
+            image: "",
+            isCorrectAnswer: true
+        },
+        {
+            text: "",
+            image: "",
+            isCorrectAnswer: false
+        }]
 }
 
 let templateAnswer = {
@@ -255,7 +264,7 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 //faltando resolver erro quando clica no botao reiniciar
-//calculando o resultado
+//renderizar dinamicamente o nivel
 //pegar a cor do background da pergunta no objeto dos quizzes
 
 
@@ -355,7 +364,7 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             //
             quizObjeto.title = criarTitulo.value 
             quizObjeto.image = criarImagem.value      
-            for (let i = 0; i < Number(criarNmrPerguntas.value); i++){
+            for (let y = 0; y < Number(criarNmrPerguntas.value); y++){
                 quizObjeto.questions.push(templateQuestion)
             }
             for (let i = 0; i < Number(criarNmrNiveis.value); i++){
@@ -415,20 +424,37 @@ function getInfoPergunta(){
 //
 
 function quizPerguntaPush() {
-    quizObjeto.questions[validadorPerguntas].title = textoPergunta
-    quizObjeto.questions[validadorPerguntas].color = corFundoPergunta
-    quizObjeto.questions[validadorPerguntas].answers[0].text = respostaCorreta
-    quizObjeto.questions[validadorPerguntas].answers[0].image = respostaCorretaURL
+    
+    let position = 1
+    quizObjeto.questions[validadorPerguntas].title = textoPergunta.value
+    quizObjeto.questions[validadorPerguntas].color = corFundoPergunta.value
+    quizObjeto.questions[validadorPerguntas].answers[0].text = respostaCorreta.value
+    quizObjeto.questions[validadorPerguntas].answers[0].image = respostaCorretaURL.value
     quizObjeto.questions[validadorPerguntas].answers[0].isCorrectAnswer = true
-    quizObjeto.questions[validadorPerguntas].answers[1].text = respostaIncorreta_1
-    quizObjeto.questions[validadorPerguntas].answers[1].image = respostaIncorretaURL_1
-    quizObjeto.questions[validadorPerguntas].answers[1].isCorrectAnswer = false
-    quizObjeto.questions[validadorPerguntas].answers[2].text = respostaIncorreta_2
-    quizObjeto.questions[validadorPerguntas].answers[2].image = respostaIncorretaURL_2
-    quizObjeto.questions[validadorPerguntas].answers[2].isCorrectAnswer = false
-    quizObjeto.questions[validadorPerguntas].answers[3].text = respostaIncorreta_3
-    quizObjeto.questions[validadorPerguntas].answers[3].image = respostaIncorretaURL_3
-    quizObjeto.questions[validadorPerguntas].answers[3].isCorrectAnswer = false
+    if (respostaIncorreta_1.value !== ""){
+        quizObjeto.questions[validadorPerguntas].answers[position].text = respostaIncorreta_1.value
+        quizObjeto.questions[validadorPerguntas].answers[position].image = respostaIncorretaURL_1.value
+        quizObjeto.questions[validadorPerguntas].answers[position].isCorrectAnswer = false
+        position += 1
+    }
+    if (respostaIncorreta_2.value !== ""){
+        if (position > 1){
+            quizObjeto.questions[validadorPerguntas].answers.push(templateAnswer)
+        }
+        quizObjeto.questions[validadorPerguntas].answers[position].text = respostaIncorreta_2.value
+        quizObjeto.questions[validadorPerguntas].answers[position].image = respostaIncorretaURL_2.value
+        quizObjeto.questions[validadorPerguntas].answers[position].isCorrectAnswer = false
+        position += 1
+    }
+    if (respostaIncorreta_3.value !== ""){
+        if (position > 1){
+            quizObjeto.questions[validadorPerguntas].answers.push(templateAnswer)
+        }
+        quizObjeto.questions[validadorPerguntas].answers[position].text = respostaIncorreta_3.value
+        quizObjeto.questions[validadorPerguntas].answers[position].image = respostaIncorretaURL_3.value
+        quizObjeto.questions[validadorPerguntas].answers[position].isCorrectAnswer = false
+        position += 1
+    }
     console.log(quizObjeto)
 }   
 
