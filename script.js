@@ -783,6 +783,7 @@ function validaTudoNiveis(icone) {
         if (validadorNiveis === DOM_niveis.length - 2 || DOM_niveis.length === 4) {
             document.querySelector(".botao").innerHTML = `<button class="goToSucesso" onclick="validaTudoNiveis()">Finalizar Quizz</button>`
         } else if (validadorNiveis === DOM_niveis.length - 1) {
+            let promise = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizObjeto)
             goToSucessoCriar()
         }
        
