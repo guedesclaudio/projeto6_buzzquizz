@@ -58,7 +58,7 @@ let validadorPerguntas = 0
 let validadorNiveis = 0
 let liberado
 let QuantidadeAcertos = 0
-
+let NumeroId
 
 /* variáveis de criação */
 let criarTitulo 
@@ -143,7 +143,7 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
-    
+    NumeroId = quizz.id
     RespostasArray = []
     quizzid = quizzesArray[quizz.id]
     toggleHome()
@@ -273,7 +273,6 @@ function ResultadoQuiz(){
     NivelAcertos = Number(NivelAcertos)
     let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
     PorcentagemAcertos = Number(PorcentagemAcertos)
-    console.log(quizzid)
     for(let indexx = 0; indexx<quizzid.levels.length; indexx++){
         if(quizzid.levels[indexx].minValue <= PorcentagemAcertos){
             NivelAcertos = indexx
@@ -288,7 +287,7 @@ function ResultadoQuiz(){
                 <p>${quizzid.levels[NivelAcertos].text}</p>
             </div>
             <div class="botoesResultado">
-                <div class="btnReiniciar" id="${quizzid.id - 1}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
+                <div class="btnReiniciar" id="${NumeroId}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
                 <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
             </div>
         </div>`
