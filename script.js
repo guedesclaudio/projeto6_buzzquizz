@@ -585,8 +585,6 @@ function toggleCaixaInput(caixaInput){
 }
 
 function goToSucessoCriar() {
-    armazenaDadosLocal()
-    pegaDadosLocal()
     document.querySelector('.criacao').innerHTML = `        <div class="sucessoCriar">
     <span>Seu quizz está pronto!</span>
     <div class="previewCard">
@@ -784,6 +782,7 @@ function validaTudoNiveis(icone) {
             document.querySelector(".botao").innerHTML = `<button class="goToSucesso" onclick="validaTudoNiveis()">Finalizar Quizz</button>`
         } else if (validadorNiveis === DOM_niveis.length - 1) {
             let promise = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizObjeto)
+            armazenaDadosLocal()
             goToSucessoCriar()
         }
        
@@ -809,6 +808,8 @@ function armazenaDadosLocal() {
 }
 
 function pegaDadosLocal() {
+    const containerUserQuizz = document.querySelector(".quizzCardsUser")
+    containerUserQuizz.innerHTML = ""
     for (let i = 0; i < localStorage.length; i++) {
         const chave = localStorage.key(i)
         const conteudoQuizz = localStorage[chave]
@@ -818,13 +819,14 @@ function pegaDadosLocal() {
     }
 }
 pegaDadosLocal()
+setInterval(pegaDadosLocal, 2000)
 
 
 function checkUserQuizz() {
     const quizzCardsUser = document.querySelector(".seusQuizzes")
     const containerUserQuizz = document.querySelectorAll(".quizzCardsUser div")
     const criarQuizz = document.querySelector(".criarQuiz")
-    if (containerUserQuizz.length > 0 ){
+    if (localStorage.length > 0 ){
         quizzCardsUser.classList.remove("hide")
         criarQuizz.classList.add("hide")
     }
