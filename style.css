@@ -152,9 +152,10 @@ ion-icon {
 
 .quizzCard span {
     position: absolute;
+    width: calc(0.32*70vw) - 25px;
     height: calc(0.06*70vw);
-    bottom: 5px;
-    left: 25px;
+    bottom: 7px;
+    left: 20px;
     line-height: 23px;
     font-size: 20px;
     font-weight: 400;
@@ -234,6 +235,7 @@ ion-icon {
     width: 330px;
     height: 175px;
     margin-bottom: 10px;
+    object-fit: cover;
 }
 .Resposta1:hover, .Resposta2:hover, .Resposta3:hover, .Resposta4:hover{
     filter: contrast(85%);

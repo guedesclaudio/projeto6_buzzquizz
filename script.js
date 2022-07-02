@@ -357,7 +357,7 @@ function goToCriarNiveis() {
     
     document.querySelector('.criacao').innerHTML = `   <div class="niveisCriar">
     <span>Agora, decida os níveis</span>
-    <div class="caixaInput">
+    <div class="Nivel caixaInput">
         <span>Nível 1</span>
         
         <input class='tituloNivel' type="text" placeholder="  Título do nivel">
@@ -367,7 +367,7 @@ function goToCriarNiveis() {
         </div>
         `     
         for (let i = 1; i < Number(criarNmrNiveis.value); i++) {
-            document.querySelector('.niveisCriar').innerHTML += `<div class="caixaInputMini">
+            document.querySelector('.niveisCriar').innerHTML += `<div class="Nivel caixaInputMini">
             <span>Nível ${i + 1}</span>
             <ion-icon name="create-outline" onclick="validaTudoNiveis(this)"></ion-icon>
         </div>`
@@ -546,7 +546,6 @@ function expandirCaixaInputP(iconeExpandir) {
 //
 
 function expandirCaixaInputN(iconeExpandir) {
-    DOM_niveis = document.querySelectorAll(".niveisCriar div");
     const miniCaixaInput = iconeExpandir.parentNode;
     nmrNivel = miniCaixaInput.querySelector("span").innerHTML
     console.log(DOM_niveis)
@@ -735,6 +734,10 @@ function validaTituloNivel() {
 
 function porcentagemAcerto() {
     porcentagemNivel = document.querySelector(".minValueNivel").value
+    if (porcentagemNivel === ""){
+        alert("Digite uma porcentagem entre 0 e 100")
+        return false
+    }
     porcentagemNivel = Number(porcentagemNivel)
     console.log(porcentagemNivel)
     if (porcentagemNivel < 0 || porcentagemNivel > 100 || isNaN(porcentagemNivel)) {
@@ -771,16 +774,15 @@ function validaTudoNiveis(icone) {
         } else {
             getInfoNivel()
             quizNiveisPush()
-            minValueCheck.push(porcentagemNivel)
             validadorNiveis += 1
         }
-        DOM_niveis = document.querySelectorAll(".niveisCriar div");
-        if (validadorNiveis < DOM_niveis.length - 1) {
+        DOM_niveis = document.querySelectorAll(".Nivel");
+        if (validadorNiveis < DOM_niveis.length) {
             expandirCaixaInputN(icone)
         }
-        if (validadorNiveis === DOM_niveis.length - 2 || DOM_niveis.length === 4) {
+        if (validadorNiveis === DOM_niveis.length - 1) {
             document.querySelector(".botao").innerHTML = `<button class="goToSucesso" onclick="validaTudoNiveis()">Finalizar Quizz</button>`
-        } else if (validadorNiveis === DOM_niveis.length - 1) {
+        } else if (validadorNiveis === DOM_niveis.length) {
             let promise = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizObjeto)
             armazenaDadosLocal()
             goToSucessoCriar()
