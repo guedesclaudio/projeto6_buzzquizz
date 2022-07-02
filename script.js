@@ -38,7 +38,7 @@ let positionCheck = 0
 let validadorNiveis = 0
 let liberado
 let QuantidadeAcertos = 0
-
+let NumeroId
 
 /* variáveis de criação */
 let criarTitulo 
@@ -64,6 +64,7 @@ let nmrPergunta
 
 // variáveis criar níveis //
 let tituloNivel
+const minValueFirstNivel = 0 //fixei o valor do primeiro nivel
 let minValueNivel
 let urlNivel
 let decricaoNivel
@@ -122,7 +123,7 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
-    
+    NumeroId = quizz.id
     RespostasArray = []
     quizzid = quizzesArray[quizz.id]
     toggleHome()
@@ -248,17 +249,25 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 function ResultadoQuiz(){
+    let NivelAcertos = 0
+    NivelAcertos = Number(NivelAcertos)
     let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
+    PorcentagemAcertos = Number(PorcentagemAcertos)
+    for(let indexx = 0; indexx<quizzid.levels.length; indexx++){
+        if(quizzid.levels[indexx].minValue <= PorcentagemAcertos){
+            NivelAcertos = indexx
+        }  
+    }
     PorcentagemAcertos = PorcentagemAcertos.toFixed(0)
     document.querySelector('.quiz').innerHTML += `
         <div class="Resultado criado">
-            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[0].title}</div>
+            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[NivelAcertos].title}</div>
             <div class="textoResultado">
-                <img class="imgresultado" src="${quizzid.levels[0].image}" alt="">
-                <p>${quizzid.levels[0].text}</p>
+                <img class="imgresultado" src="${quizzid.levels[NivelAcertos].image}" alt="">
+                <p>${quizzid.levels[NivelAcertos].text}</p>
             </div>
             <div class="botoesResultado">
-                <div class="btnReiniciar" id="${quizzid.id - 1}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
+                <div class="btnReiniciar" id="${NumeroId}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
                 <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
             </div>
         </div>`
@@ -303,8 +312,8 @@ function goToCriar() {
 //
 
 function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- se foram preenchidos corretamente.
-        if (criarTitulo.value.length > 65 || criarTitulo.value.length < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3) {
-            alert("Os dados são inválidos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres")
+        if (criarTitulo.value.length > 65 || criarTitulo.value.length < 20 || Number(criarNmrNiveis.value) < 2 || Number(criarNmrPerguntas.value) < 3 || validaUrlInicio() === false) {
+            alert("Os dados são inválidos. Preencha-os corretamente.\nMínimo de níveis: 2\nMínimo de perguntas: 3\nTítulo: entre 20 e 65 caracteres\nLink precisa ser válido")
         } else {
             document.querySelector('.criacao').innerHTML = `<div class="perguntasCriar">
             <span>Crie suas perguntas</span>
@@ -359,7 +368,7 @@ function goToCriarNiveis() {
         <span>Nível 1</span>
         
         <input class='tituloNivel' type="text" placeholder="  Título do nivel">
-        <input class='minValueNivel' type="text" placeholder="  % mínima de acerto">
+        <input class='minValueNivel' type="text" placeholder="  Nesse nível a % mínima de acerto é 0" value="0" disabled> 
         <input class='urlNivel' type="text" placeholder="  URL da imagem do nível">
         <input class='descricaoNivel' type="text" placeholder="  Descrição do nível">
         </div>
@@ -780,3 +789,12 @@ function validaTudoNiveis(icone) {
 }
 
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
+
+function validaUrlInicio() {
+    const urlInicio = document.querySelector("input.imageURL").value
+
+    try {let url = new URL(urlInicio) } 
+    catch(err) {
+        return false
+    }
+}
