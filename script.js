@@ -825,9 +825,9 @@ function apagaQuizzLocal(tituloQuizz) {
 function renderizaUserQuizz(quizzRetornado) {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
     const templateUserQuizz = `
-    <div class="ImgTopoQuiz">
-        <img class="ImagemQuizBanner" src="${quizzRetornado.image}" alt="">
-        <h2 class="TituloQuizBanner">${quizzRetornado.title}</h2>
+    <div class="quizzCard" id="" onclick="goToQuizz(this)">
+        <img src=${quizzRetornado.image}>
+        <span>${quizzRetornado.title}</span>
     </div>
     `
     containerUserQuizz.innerHTML += templateUserQuizz
