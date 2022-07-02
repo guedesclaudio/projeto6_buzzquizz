@@ -10,29 +10,8 @@
 let quizObjeto = {
 	title: "",
 	image: "",
-	questions: [],//recebe templateQuestion
-	levels: []//recebe templateLevel
-}
-
-let templateQuestion = {
-        title: "",
-        color: "#123456",
-        answers: [{
-            text: "",
-            image: "",
-            isCorrectAnswer: true
-        },
-        {
-            text: "",
-            image: "",
-            isCorrectAnswer: false
-        }]
-}
-
-let templateAnswer = {
-    text: "",
-    image: "",
-    isCorrectAnswer: true
+	questions:[],
+	levels:[]
 }
 
 let templateLevel = {
@@ -55,10 +34,11 @@ let proximoelemento
 let quizzid
 let i
 let validadorPerguntas = 0
+let positionCheck = 0
 let validadorNiveis = 0
 let liberado
 let QuantidadeAcertos = 0
-
+let NumeroId
 
 /* variáveis de criação */
 let criarTitulo 
@@ -143,7 +123,7 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
-    
+    NumeroId = quizz.id
     RespostasArray = []
     quizzid = quizzesArray[quizz.id]
     toggleHome()
@@ -269,17 +249,25 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 function ResultadoQuiz(){
+    let NivelAcertos = 0
+    NivelAcertos = Number(NivelAcertos)
     let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
+    PorcentagemAcertos = Number(PorcentagemAcertos)
+    for(let indexx = 0; indexx<quizzid.levels.length; indexx++){
+        if(quizzid.levels[indexx].minValue <= PorcentagemAcertos){
+            NivelAcertos = indexx
+        }  
+    }
     PorcentagemAcertos = PorcentagemAcertos.toFixed(0)
     document.querySelector('.quiz').innerHTML += `
         <div class="Resultado criado">
-            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[0].title}</div>
+            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[NivelAcertos].title}</div>
             <div class="textoResultado">
-                <img class="imgresultado" src="${quizzid.levels[0].image}" alt="">
-                <p>${quizzid.levels[0].text}</p>
+                <img class="imgresultado" src="${quizzid.levels[NivelAcertos].image}" alt="">
+                <p>${quizzid.levels[NivelAcertos].text}</p>
             </div>
             <div class="botoesResultado">
-                <div class="btnReiniciar" id="${quizzid.id - 1}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
+                <div class="btnReiniciar" id="${NumeroId}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
                 <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
             </div>
         </div>`
@@ -364,9 +352,6 @@ function goToCriarPerguntas() { //verifica 1- se os campos foram preenchidos 2- 
             //
             quizObjeto.title = criarTitulo.value 
             quizObjeto.image = criarImagem.value      
-            for (let y = 0; y < Number(criarNmrPerguntas.value); y++){
-                quizObjeto.questions.push(templateQuestion)
-            }
             for (let i = 0; i < Number(criarNmrNiveis.value); i++){
                 quizObjeto.levels.push(templateLevel)
             }
@@ -424,37 +409,84 @@ function getInfoPergunta(){
 //
 
 function quizPerguntaPush() {
-    
-    let position = 1
-    quizObjeto.questions[validadorPerguntas].title = textoPergunta.value
-    quizObjeto.questions[validadorPerguntas].color = corFundoPergunta.value
-    quizObjeto.questions[validadorPerguntas].answers[0].text = respostaCorreta.value
-    quizObjeto.questions[validadorPerguntas].answers[0].image = respostaCorretaURL.value
-    quizObjeto.questions[validadorPerguntas].answers[0].isCorrectAnswer = true
-    if (respostaIncorreta_1.value !== ""){
-        quizObjeto.questions[validadorPerguntas].answers[position].text = respostaIncorreta_1.value
-        quizObjeto.questions[validadorPerguntas].answers[position].image = respostaIncorretaURL_1.value
-        quizObjeto.questions[validadorPerguntas].answers[position].isCorrectAnswer = false
-        position += 1
+
+    let templateQuestion = {
+        title: "",
+        color: "#123456",
+        answers: []
     }
-    if (respostaIncorreta_2.value !== ""){
-        if (position > 1){
-            quizObjeto.questions[validadorPerguntas].answers.push(templateAnswer)
+
+    templateQuestion.title = textoPergunta.value
+    templateQuestion.color = corFundoPergunta.value
+
+    function pushRespostaCerta(){
+        let templateAnswer = {
+            text: "",
+            image: "",
+            isCorrectAnswer: true
         }
-        quizObjeto.questions[validadorPerguntas].answers[position].text = respostaIncorreta_2.value
-        quizObjeto.questions[validadorPerguntas].answers[position].image = respostaIncorretaURL_2.value
-        quizObjeto.questions[validadorPerguntas].answers[position].isCorrectAnswer = false
-        position += 1
+
+        templateAnswer.text = respostaCorreta.value
+        templateAnswer.image = respostaCorretaURL.value
+        templateAnswer.isCorrectAnswer = true
+        templateQuestion.answers.push(templateAnswer)
     }
-    if (respostaIncorreta_3.value !== ""){
-        if (position > 1){
-            quizObjeto.questions[validadorPerguntas].answers.push(templateAnswer)
+
+    function pushRespostaErrada_1(){
+        let templateAnswer = {
+            text: "",
+            image: "",
+            isCorrectAnswer: false
         }
-        quizObjeto.questions[validadorPerguntas].answers[position].text = respostaIncorreta_3.value
-        quizObjeto.questions[validadorPerguntas].answers[position].image = respostaIncorretaURL_3.value
-        quizObjeto.questions[validadorPerguntas].answers[position].isCorrectAnswer = false
-        position += 1
+
+        if (respostaIncorreta_1.value !== ""){
+            templateAnswer.text = respostaIncorreta_1.value
+            templateAnswer.image = respostaIncorretaURL_1.value
+            templateAnswer.isCorrectAnswer = false
+            templateQuestion.answers.push(templateAnswer)
+            
+        }
+    }   
+    function pushRespostaErrada_2(){
+        let templateAnswer = {
+            text: "",
+            image: "",
+            isCorrectAnswer: false
+        }
+
+        if (respostaIncorreta_2.value !== ""){
+            templateAnswer.text = respostaIncorreta_2.value
+            templateAnswer.image = respostaIncorretaURL_2.value
+            templateAnswer.isCorrectAnswer = false
+            templateQuestion.answers.push(templateAnswer)
+            
+        }
     }
+
+    function pushRespostaErrada_3(){
+        let templateAnswer = {
+            text: "",
+            image: "",
+            isCorrectAnswer: false
+        }
+
+        if (respostaIncorreta_3.value !== ""){
+            templateAnswer.text = respostaIncorreta_3.value
+            templateAnswer.image = respostaIncorretaURL_3.value
+            templateAnswer.isCorrectAnswer = false
+            templateQuestion.answers.push(templateAnswer)
+            
+        }
+    }
+    console.log(templateQuestion)
+
+    pushRespostaCerta()
+    pushRespostaErrada_1()
+    pushRespostaErrada_2()
+    pushRespostaErrada_3()
+    quizObjeto.questions[positionCheck] = templateQuestion
+    positionCheck += 1
+
     console.log(quizObjeto)
 }   
 
@@ -662,11 +694,11 @@ function validaTudoPerguntas(icone) {
         validaRespostaCorreta() === false || 
         validaQtdRespostasIncorretas() === false) {
         return
-    }else {
-        getInfoPergunta()
-        quizPerguntaPush()
-        validadorPerguntas += 1
     }
+
+    getInfoPergunta()
+    quizPerguntaPush()
+    validadorPerguntas += 1
     DOM_perguntas = document.querySelectorAll(".perguntasCriar div");
     if (validadorPerguntas < DOM_perguntas.length - 1){
         expandirCaixaInputP(icone)
