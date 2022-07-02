@@ -778,7 +778,7 @@ function validaTudoNiveis(icone) {
         if (validadorNiveis < DOM_niveis.length - 1) {
             expandirCaixaInputN(icone)
         }
-        if (validadorNiveis === DOM_niveis.length - 2) {
+        if (validadorNiveis === DOM_niveis.length - 2 || DOM_niveis.length === 4) {
             document.querySelector(".botao").innerHTML = `<button class="goToSucesso" onclick="validaTudoNiveis()">Finalizar Quizz</button>`
         } else if (validadorNiveis === DOM_niveis.length - 1) {
             goToSucessoCriar()
