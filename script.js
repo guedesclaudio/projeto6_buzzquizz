@@ -14,13 +14,6 @@ let quizObjeto = {
 	levels:[]
 }
 
-let templateLevel = {
-    title: "",
-    image: "",
-    text: "",
-    minValue: 0
-}
-
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
@@ -67,7 +60,7 @@ let tituloNivel
 const minValueFirstNivel = 0 //fixei o valor do primeiro nivel
 let minValueNivel
 let urlNivel
-let decricaoNivel
+let descricaoNivel
 
 let nmrNivel
 let minValueCheck = []
@@ -492,11 +485,29 @@ function quizPerguntaPush() {
 
 //
 
+function quizNiveisPush() {
+
+    let templateLevel = {
+        title: "",
+        image: "",
+        text: "",
+        minValue: 0
+    }
+    templateLevel.title = tituloNivel.value
+    templateLevel.image = urlNivel.value
+    templateLevel.text = descricaoNivel.value
+    templateLevel.minValue = minValueNivel.value
+
+    quizObjeto.levels.push(templateLevel)
+}
+
+//
+
 function getInfoNivel(){
     tituloNivel = document.querySelector(".tituloNivel")
     minValueNivel = document.querySelector(".minValueNivel")
     urlNivel = document.querySelector(".urlNivel")
-    decricaoNivel = document.querySelector(".descricaoNivel")
+    descricaoNivel = document.querySelector(".descricaoNivel")
 }
 
 //
@@ -759,6 +770,7 @@ function validaTudoNiveis(icone) {
             return
         } else {
             getInfoNivel()
+            quizNiveisPush()
             minValueCheck.push(porcentagemNivel)
             validadorNiveis += 1
         }
