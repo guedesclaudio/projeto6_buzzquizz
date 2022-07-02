@@ -585,6 +585,8 @@ function toggleCaixaInput(caixaInput){
 }
 
 function goToSucessoCriar() {
+    armazenaDadosLocal()
+    pegaDadosLocal()
     document.querySelector('.criacao').innerHTML = `        <div class="sucessoCriar">
     <span>Seu quizz está pronto!</span>
     <div class="previewCard">
