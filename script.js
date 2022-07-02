@@ -818,6 +818,18 @@ function pegaDadosLocal() {
 }
 pegaDadosLocal()
 
+
+function checkUserQuizz() {
+    const quizzCardsUser = document.querySelector(".seusQuizzes")
+    const containerUserQuizz = document.querySelectorAll(".quizzCardsUser div")
+    const criarQuizz = document.querySelector(".criarQuiz")
+    if (containerUserQuizz.length > 0 ){
+        quizzCardsUser.classList.remove("hide")
+        criarQuizz.classList.add("hide")
+    }
+}
+checkUserQuizz()
+
 function apagaQuizzLocal(tituloQuizz) {
     localStorage.removeItem(tituloQuizz);
 }
