@@ -383,7 +383,7 @@ function goToCriarNiveis() {
         <span>Nível 1</span>
         
         <input class='tituloNivel' type="text" placeholder="  Título do nivel">
-        <input class='minValueNivel' type="text" placeholder="  Nesse nível a % mínima de acerto é 0" value="0" disabled> 
+        <input class='minValueNivel' type="text" value="0" placeholder="  Nesse nível a % mínima de acerto é 0" disabled> 
         <input class='urlNivel' type="text" placeholder="  URL da imagem do nível">
         <input class='descricaoNivel' type="text" placeholder="  Descrição do nível">
         </div>
@@ -572,7 +572,7 @@ function validaPergunta() {
 }
 
 function validaCorDeFundo() {
-    const corDeFundo = document.querySelector("input.corFundoPergunta").value //talvez precise alterar para let
+    const corDeFundo = document.querySelector("input.corFundoPergunta").value 
     const letrasMaiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
                              "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     const letrasMinusculas = []
@@ -583,9 +583,8 @@ function validaCorDeFundo() {
     const numeros = ["0","1","2","3","4","5","6","7","8","9"]
 
     if (corDeFundo.length === 7 && corDeFundo[0] === "#") {
-        //console.log("passou no primeiro")
         for (let i = 1; i < corDeFundo.length; i++) {
-            if (letrasMaiusculas.indexOf(corDeFundo[i]) > -1 || letrasMinusculas.indexOf(corDeFundo[i]) > -1 || numeros.indexOf(corDeFundo[i]) > -1) console.log("ok")
+            if (letrasMaiusculas.indexOf(corDeFundo[i]) > -1 || letrasMinusculas.indexOf(corDeFundo[i]) > -1 || numeros.indexOf(corDeFundo[i]) > -1) ok = true
             else {
                 alert("Digite uma cor de fundo corretamente")
                 return false
@@ -598,15 +597,6 @@ function validaCorDeFundo() {
         return false
     }
 }
-
-/*Acho que nao vai precisar dessa
-function validaResposta() {
-    const resposta = prompt("Digite a resposta") //talvez precise alterar para let
-    if (resposta === "") { //talvez precise acrescentar null e undefined para cobrir tudo
-        console.log("resposta ta vazia")
-        // return false
-    }
-}*/
 
 function validaURL() {
     const urlrespostaCorreta = document.querySelector("input.respostaCorretaURL").value
@@ -671,7 +661,6 @@ function validaTudoPerguntas(icone) {
         validaURL() === false ||
         validaRespostaCorreta() === false || 
         validaQtdRespostasIncorretas() === false) {
-        //alert("Digite corretamente")
         return
     }else {
         getInfoPergunta()
@@ -690,11 +679,9 @@ function validaTudoPerguntas(icone) {
     
     
 }
-
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DE PERGUNTAS - CLAUDIO
 
 //CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
-
 function validaTituloNivel() {
     const nivelTitulo = document.querySelector(".tituloNivel").value
     if (nivelTitulo.length < 10) {
@@ -755,7 +742,6 @@ function validaTudoNiveis(icone) {
        
         
 }
-
 //FIM DA CRIAÇÃO DA VALIDAÇÃO DOS NÍVEIS - CLAUDIO
 
 function validaUrlInicio() {
@@ -766,3 +752,26 @@ function validaUrlInicio() {
         return false
     }
 }
+
+//ARMAZENANDO, PEGANDO  e APAGANDO DADOS DO LOCAL STORAGE
+function armazenaDadosLocal() {
+    let key = quizObjeto.title
+    const myQuizz = quizObjeto
+    const myQuizzSerializado = JSON.stringify(myQuizz)
+    localStorage.setItem(key, myQuizzSerializado)
+}
+
+function pegaDadosLocal() {
+    for (let i = 0; i < localStorage.length; i++) {
+        const chave = localStorage.key(i)
+        const conteudoQuizz = localStorage[chave]
+        const quizzRetornado = JSON.parse(conteudoQuizz)
+        console.log(quizzRetornado)
+    }
+}
+
+function apagaQuizzLocal(tituloQuizz) {
+    localStorage.removeItem(tituloQuizz);
+}
+
+//chamar esses dados em uma funcao que renderiza tudo
