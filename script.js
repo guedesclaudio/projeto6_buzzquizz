@@ -812,15 +812,28 @@ function pegaDadosLocal() {
         const chave = localStorage.key(i)
         const conteudoQuizz = localStorage[chave]
         const quizzRetornado = JSON.parse(conteudoQuizz)
-        console.log(quizzRetornado)
+        //console.log(quizzRetornado)
+        renderizaUserQuizz(quizzRetornado)
     }
 }
+pegaDadosLocal()
 
 function apagaQuizzLocal(tituloQuizz) {
     localStorage.removeItem(tituloQuizz);
 }
 
-//chamar esses dados em uma funcao que renderiza tudo
+function renderizaUserQuizz(quizzRetornado) {
+    const containerUserQuizz = document.querySelector(".quizzCardsUser")
+    const templateUserQuizz = `
+    <div class="ImgTopoQuiz">
+        <img class="ImagemQuizBanner" src="${quizzRetornado.image}" alt="">
+        <h2 class="TituloQuizBanner">${quizzRetornado.title}</h2>
+    </div>
+    `
+    containerUserQuizz.innerHTML += templateUserQuizz
+}
+
+
 function avisaPorcentagemNivel() {
     alert("Nesse nível a % mínima de acerto é 0")
 }
