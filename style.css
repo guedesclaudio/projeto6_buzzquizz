@@ -152,9 +152,10 @@ ion-icon {
 
 .quizzCard span {
     position: absolute;
+    width: calc(0.32*70vw) - 25px;
     height: calc(0.06*70vw);
-    bottom: 5px;
-    left: 25px;
+    bottom: 7px;
+    left: 20px;
     line-height: 23px;
     font-size: 20px;
     font-weight: 400;
