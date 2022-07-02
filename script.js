@@ -269,14 +269,23 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 function ResultadoQuiz(){
+    let NivelAcertos = 0
+    NivelAcertos = Number(NivelAcertos)
     let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
+    PorcentagemAcertos = Number(PorcentagemAcertos)
+    console.log(quizzid)
+    for(let indexx = 0; indexx<quizzid.levels.length; indexx++){
+        if(quizzid.levels[indexx].minValue <= PorcentagemAcertos){
+            NivelAcertos = indexx
+        }  
+    }
     PorcentagemAcertos = PorcentagemAcertos.toFixed(0)
     document.querySelector('.quiz').innerHTML += `
         <div class="Resultado criado">
-            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[0].title}</div>
+            <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[NivelAcertos].title}</div>
             <div class="textoResultado">
-                <img class="imgresultado" src="${quizzid.levels[0].image}" alt="">
-                <p>${quizzid.levels[0].text}</p>
+                <img class="imgresultado" src="${quizzid.levels[NivelAcertos].image}" alt="">
+                <p>${quizzid.levels[NivelAcertos].text}</p>
             </div>
             <div class="botoesResultado">
                 <div class="btnReiniciar" id="${quizzid.id - 1}" onclick="goToQuizz(this)">Reiniciar Quizz</div>
