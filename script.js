@@ -585,8 +585,6 @@ function toggleCaixaInput(caixaInput){
 }
 
 function goToSucessoCriar() {
-    armazenaDadosLocal()
-    pegaDadosLocal()
     document.querySelector('.criacao').innerHTML = `        <div class="sucessoCriar">
     <span>Seu quizz está pronto!</span>
     <div class="previewCard">
@@ -783,6 +781,7 @@ function validaTudoNiveis(icone) {
         if (validadorNiveis === DOM_niveis.length - 2 || DOM_niveis.length === 4) {
             document.querySelector(".botao").innerHTML = `<button class="goToSucesso" onclick="validaTudoNiveis()">Finalizar Quizz</button>`
         } else if (validadorNiveis === DOM_niveis.length - 1) {
+            armazenaDadosLocal()
             goToSucessoCriar()
         }
        
@@ -808,6 +807,8 @@ function armazenaDadosLocal() {
 }
 
 function pegaDadosLocal() {
+    const containerUserQuizz = document.querySelector(".quizzCardsUser")
+    containerUserQuizz.innerHTML = ""
     for (let i = 0; i < localStorage.length; i++) {
         const chave = localStorage.key(i)
         const conteudoQuizz = localStorage[chave]
@@ -816,7 +817,7 @@ function pegaDadosLocal() {
         renderizaUserQuizz(quizzRetornado)
     }
 }
-pegaDadosLocal()
+setInterval(pegaDadosLocal, 3000)
 
 function apagaQuizzLocal(tituloQuizz) {
     localStorage.removeItem(tituloQuizz);
