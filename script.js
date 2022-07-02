@@ -368,7 +368,7 @@ function goToCriarNiveis() {
         <span>Nível 1</span>
         
         <input class='tituloNivel' type="text" placeholder="  Título do nivel">
-        <input class='minValueNivel' type="text" value="0" placeholder="  Nesse nível a % mínima de acerto é 0" disabled> 
+        <div onclick="avisaPorcentagemNivel()"><input class='minValueNivel' type="text" value="0" placeholder="  Nesse nível a % mínima de acerto é 0" disabled></div>
         <input class='urlNivel' type="text" placeholder="  URL da imagem do nível">
         <input class='descricaoNivel' type="text" placeholder="  Descrição do nível">
         </div>
@@ -807,3 +807,6 @@ function apagaQuizzLocal(tituloQuizz) {
 }
 
 //chamar esses dados em uma funcao que renderiza tudo
+function avisaPorcentagemNivel() {
+    alert("Nesse nível a % mínima de acerto é 0")
+}
