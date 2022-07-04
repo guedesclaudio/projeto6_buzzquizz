@@ -624,8 +624,7 @@ function validaPergunta() {
 
 function validaCorDeFundo() {
     const corDeFundo = document.querySelector("input.corFundoPergunta").value 
-    const letrasMaiusculas = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
-                             "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    const letrasMaiusculas = ["A", "B", "C", "D", "E", "F"]
     const letrasMinusculas = []
     for (let i = 0; i < letrasMaiusculas.length; i++) {
         let caracterMinusculo = letrasMaiusculas[i].toLowerCase()
