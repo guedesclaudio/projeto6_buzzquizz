@@ -127,6 +127,7 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
+    document.querySelector('.criacao').innerHTML = ''
     if(document.querySelector('.quiz').classList.contains('ResultadoCriado')){
         document.querySelector('.quiz').classList.remove('ResultadoCriado')
     }
@@ -603,16 +604,11 @@ function goToSucessoCriar() {
         <img src="${quizObjeto.image}" alt="">
         <span>${quizObjeto.title}</span>
     </div>
-    <button class="" onclick="trabalhandoNisso()">Acessar Quizz</button>
+    <button id="${localStorage.length+49}" onclick="goToQuizz(this)">Acessar Quizz</button>
     <div class="backHome" onclick="refresh()">Voltar pra home</div>
 </div>`
 }
 /*FIM CRIAÇÃO*/
-
-
-function trabalhandoNisso() {
-    alert("Essa função ainda não está pronta")
-}
 
 
 
