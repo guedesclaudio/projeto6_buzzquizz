@@ -6,14 +6,17 @@
 /* 4° - Criação de quiz*/
 
 /*INÍCIO GLOBAIS*/
-
+//metodo do id n ta funcionando pq quando a pagina reinicia o quizobjeto fica vazio
+//tem q achar um jeito de pegar o objeto do local storage para dar push no quizzesarray com id 50 
+//todos id 50+ sao do usuario
 let quizObjeto = {
 	title: "",
 	image: "",
 	questions:[],
 	levels:[]
 }
-
+let chave
+console.log(localStorage)
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
@@ -103,8 +106,9 @@ function ObterQuizzesSucesso(elemento){
         </div>`
         document.querySelector('.quizzCards').innerHTML += quizzCardtemplate
     }
-    
-
+    const QuizzObjetoSerializado = localStorage.getItem(chave)
+    const quizzObjetoDeserializado = JSON.parse(QuizzObjetoSerializado)
+    quizzesArray.push(quizzObjetoDeserializado)
 }
 ObterQuizzes()
 /*FIM HOME*/
@@ -115,7 +119,7 @@ ObterQuizzes()
 /*INÍCIO QUIZ*/
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
-    // quizz.id === i
+    // quizz.id === i 
     QuantidadeAcertos = 0
     NumeroId = quizz.id
     RespostasArray = []
@@ -805,7 +809,7 @@ function validaUrlInicio() {
 
 //ARMAZENANDO, PEGANDO  e APAGANDO DADOS DO LOCAL STORAGE
 function armazenaDadosLocal() {
-    let key = quizObjeto.title
+    let key = 'bolinha'
     const myQuizz = quizObjeto
     console.log(quizObjeto)
     const myQuizzSerializado = JSON.stringify(myQuizz)
@@ -816,15 +820,16 @@ function pegaDadosLocal() {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
     containerUserQuizz.innerHTML = ""
     for (let i = 0; i < localStorage.length; i++) {
-        const chave = localStorage.key(i)
+        chave = localStorage.key(i)
         const conteudoQuizz = localStorage[chave]
         const quizzRetornado = JSON.parse(conteudoQuizz)
+        console.log(chave)
         //console.log(quizzRetornado)
         renderizaUserQuizz(quizzRetornado)
     }
 }
 pegaDadosLocal()
-setInterval(pegaDadosLocal, 2000)
+//setInterval(pegaDadosLocal, 2000)
 
 
 function checkUserQuizz() {
@@ -844,6 +849,7 @@ function apagaQuizzLocal(tituloQuizz) {
 
 function renderizaUserQuizz(quizzRetornado) {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
+    //for(let contador = 50 ; contador < )
     const templateUserQuizz = `
     <div class="quizzCard" id="50" onclick="goToQuizz(this)">
         <img src=${quizzRetornado.image}>
@@ -851,6 +857,7 @@ function renderizaUserQuizz(quizzRetornado) {
     </div>
     `
     containerUserQuizz.innerHTML += templateUserQuizz
+    
 }
 
 
