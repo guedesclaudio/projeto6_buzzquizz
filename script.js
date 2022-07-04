@@ -76,7 +76,11 @@ function refresh() {
 function comparador() { 
 	return Math.random() - 0.5; 
 }
-
+function TirarOHide(){
+    if(NumeroProximaQuestao !== indice){
+        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
+    }
+}
 /*INÍCIO HOME*/
 
 function toggleHome() {  // função pra fazer aparecer e sumir a Homepage
@@ -115,7 +119,10 @@ ObterQuizzes()
 /*INÍCIO QUIZ*/
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
-    // quizz.id === i 
+    // quizz.id === i
+    if(document.querySelector('.quiz').classList.contains('ResultadoCriado')){
+        document.querySelector('.quiz').classList.remove('ResultadoCriado')
+    }
     QuantidadeAcertos = 0
     NumeroId = quizz.id
     RespostasArray = []
@@ -175,15 +182,14 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     document.querySelector('.ImgTopoQuiz').scrollIntoView({behavior: "smooth", block:'center'})
     document.querySelector('.nmrquestao0').classList.remove('hide')
 }
-function TirarOHide(){
-    if(NumeroProximaQuestao !== indice){
-        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
-    }
-}
+
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
 function VerificarResposta(elemento){ //verificar jeito melhor de fazer
     ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
+    if(document.querySelector('.'+ClasseNumeroDaQuestao).classList.contains('errou')){
+        return
+    }
     NmrDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
     NmrDaQuestao = Number(NmrDaQuestao)
     NumeroProximaQuestao = NmrDaQuestao + 1
@@ -235,16 +241,8 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
         return
     }
     proximoelemento = document.querySelector('.questao'+proximonumero)
-
     setTimeout(scroll, 2000)
 }
-
-
-//faltando resolver erro quando clica no botao reiniciar
-//renderizar dinamicamente o nivel
-//pegar a cor do background da pergunta no objeto dos quizzes
-
-
 function ResultadoQuiz(){
     if(document.querySelector('.quiz').classList.contains('ResultadoCriado')){
         return
