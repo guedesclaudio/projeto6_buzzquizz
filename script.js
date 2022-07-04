@@ -81,9 +81,16 @@ function TirarOHide(){
         document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
     }
 }
+function toggleLoading(){
+    document.querySelector(".loading").classList.toggle('hide')
+}
+toggleLoading()
+setTimeout(toggleLoading, 2000)
 /*INÍCIO HOME*/
 
 function toggleHome() {  // função pra fazer aparecer e sumir a Homepage
+    toggleLoading()
+    setTimeout(toggleLoading, 2000)
     if (DOM_home === ""){ // caso esteja vazia
         document.querySelector(".home").innerHTML = "."//aqui entra todo html da home 
         //modifiquei aqui porque a função não estava sumindo o conteúdo
