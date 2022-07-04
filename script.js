@@ -848,7 +848,8 @@ function checkUserQuizz() {
 }
 checkUserQuizz()
 
-function apagaQuizzLocal(tituloQuizz) {
+function apagaQuizzLocal(element) {
+    document.querySelector
     localStorage.removeItem(tituloQuizz);
 }
 
@@ -858,6 +859,7 @@ function renderizaUserQuizz(quizzRetornado) {
     <div class="quizzCard" id="${contador}" onclick="goToQuizz(this)">
         <img src=${quizzRetornado.image}>
         <span>${quizzRetornado.title}</span>
+        <div class="apaga-card"><img src="img/Vector.png"></div>
     </div>
     `
     containerUserQuizz.innerHTML += templateUserQuizz
