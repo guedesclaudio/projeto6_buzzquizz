@@ -6,17 +6,16 @@
 /* 4° - Criação de quiz*/
 
 /*INÍCIO GLOBAIS*/
-//comentei a função setInterval(pegaDadosLocal, 2000) na linha 832, pq dava erro no console, tem algum problema?
-//-lucas
 let quizObjeto = {
 	title: "",
 	image: "",
 	questions:[],
 	levels:[]
 }
+let NmrDaQuestao
+let NumeroProximaQuestao
 let chave
 let contador = 50
-console.log(localStorage)
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
@@ -176,16 +175,19 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     document.querySelector('.ImgTopoQuiz').scrollIntoView({behavior: "smooth", block:'center'})
     document.querySelector('.nmrquestao0').classList.remove('hide')
 }
+function TirarOHide(){
+    if(NumeroProximaQuestao !== indice){
+        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
+    }
+}
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
 function VerificarResposta(elemento){ //verificar jeito melhor de fazer
     ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
-    let NmrDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
+    NmrDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
     NmrDaQuestao = Number(NmrDaQuestao)
-    let NumeroProximaQuestao = NmrDaQuestao + 1
-    if(NumeroProximaQuestao !== indice){
-        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
-    }
+    NumeroProximaQuestao = NmrDaQuestao + 1
+    setTimeout(TirarOHide,2000)
     if(elemento.classList.contains('esbranquicado') === false){
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
