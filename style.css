@@ -90,7 +90,6 @@ ion-icon {
 }
 
 .seusQuizzes span {
-    width: 70vw;
     display: flex;
     align-items: center;
     font-size: 20px;
@@ -114,7 +113,7 @@ ion-icon {
 }
 
 .todosQuizzes {
-    margin-top: 70px;
+    margin-top: 50px;
     width: 70vw;
     height: auto;
     margin-bottom: 20vh;
@@ -157,6 +156,7 @@ ion-icon {
     bottom: 7px;
     left: 20px;
     line-height: 23px;
+    word-wrap: normal;
     font-size: 20px;
     font-weight: 400;
     color: #ffffff;
