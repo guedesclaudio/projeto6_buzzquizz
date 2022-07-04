@@ -116,6 +116,7 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
+    QuantidadeAcertos = 0
     NumeroId = quizz.id
     RespostasArray = []
     quizzid = quizzesArray[quizz.id]
