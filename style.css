@@ -403,6 +403,10 @@ ion-icon {
     color: white;
 }
 
+.quiz span {
+    word-break: break-all;
+    word-wrap: break-word;
+}
 /*INÍCIO CRIAÇÃO*/
 
 .caixaInput {
