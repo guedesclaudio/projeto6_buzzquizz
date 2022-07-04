@@ -246,6 +246,9 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
 
 
 function ResultadoQuiz(){
+    if(document.querySelector('.quiz').classList.contains('ResultadoCriado')){
+        return
+    }
     let NivelAcertos = 0
     NivelAcertos = Number(NivelAcertos)
     let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
@@ -257,7 +260,7 @@ function ResultadoQuiz(){
     }
     PorcentagemAcertos = PorcentagemAcertos.toFixed(0)
     document.querySelector('.quiz').innerHTML += `
-        <div class="Resultado criado">
+        <div class="Resultado">
             <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[NivelAcertos].title}</div>
             <div class="textoResultado">
                 <img class="imgresultado" src="${quizzid.levels[NivelAcertos].image}" alt="">
@@ -268,6 +271,7 @@ function ResultadoQuiz(){
                 <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
             </div>
         </div>`
+    document.querySelector('.quiz').classList.add('ResultadoCriado')
         scrollResultado()
 }
 function scroll (){
