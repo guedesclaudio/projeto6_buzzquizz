@@ -253,6 +253,11 @@ ion-icon {
     margin-bottom: 20px;
     width: 330px;
 }
+.Resposta1 span, .Resposta2 span, .Resposta3 span, .Resposta4 span{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
 .imgresposta{
     width: 330px;
     height: 175px;
@@ -710,6 +715,73 @@ ion-icon {
     /*FIM HOME*/
 
     /*INÍCIO QUIZ*/
+
+    .TituloQuizBanner {
+        width: 90vw;
+        text-align: center;
+    }
+
+    .QeAQuiz {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Pergunta   {
+        width: 90vw;
+        height: 90px;
+        font-size: 19px;
+        text-align: center;
+    }
+
+    .Resposta1, .Resposta2, .Resposta3, .Resposta4{
+        margin-bottom: 20px;
+        width: 43vw;
+    }
+
+    .Resposta1 span, .Resposta2 span, .Resposta3 span, .Resposta4 span{
+        width: 43vw;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .imgresposta {
+        width: 43vw;
+        height: 21vw;
+    }
+
+    .Resultado{
+        width: 90vw;
+    }
+
+    .tituloResultado{
+        height: 70px;
+        text-align: center;
+    }
+
+    .textoResultado{
+        flex-direction: column;
+    }
+
+    .textoResultado img, .textoResultado p{
+        width: 90vw;
+        word-break: break-word;
+        margin-left: 0;
+    }
+
+    .textoResultado p {
+        margin-left: 5px;
+        margin-top: 15px;
+    }
+
+    .botoesResultado{
+        font-size: 18px;
+        margin-top: 50px;
+    }
+    .btnReiniciar{
+        width: 55vw;
+    }
 
     /*FIM QUIZ*/
 
