@@ -313,8 +313,23 @@ ion-icon {
 
 /*FIM QUIZ*/
 
+.quizzLocal {
+    position: relative;
+}
 
-
+.apaga-card {
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    background: #EC362D;
+    border-radius: 10px 0px 0px 11px;
+    width: 43px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /*INÍCIO CRIAÇÃO*/
 
@@ -559,12 +574,6 @@ ion-icon {
     cursor: pointer;
 }
 
-.apaga-card {
-    position: absolute;
-    top: 30px;
-    right: 10px;
-}
-
 /*FIM CRIAÇÃO*/
 
 @media(max-width: 1100px){
@@ -615,7 +624,7 @@ ion-icon {
         width: 90vw;
         height: 50vw;
         margin-top: 9px;
-        position: relative;
+        /*position: relative;*/
     }
 
     .quizzCard img {

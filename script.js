@@ -849,18 +849,25 @@ function checkUserQuizz() {
 checkUserQuizz()
 
 function apagaQuizzLocal(element) {
-    document.querySelector
+    const card = element.parentNode
+    const tituloQuizz = card.querySelector("span").innerHTML
+    console.log(card, tituloQuizz)
+    card.remove()
     localStorage.removeItem(tituloQuizz);
 }
 
 function renderizaUserQuizz(quizzRetornado) {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
     const templateUserQuizz = `
-    <div class="quizzCard" id="${contador}" onclick="goToQuizz(this)">
-        <img src=${quizzRetornado.image}>
-        <span>${quizzRetornado.title}</span>
-        <div class="apaga-card"><img src="img/Vector.png"></div>
-    </div>
+    <div class="quizzLocal">
+        <div class="quizzCard" id="${contador}" onclick="goToQuizz(this)">
+            <img src=${quizzRetornado.image}>
+            <span>${quizzRetornado.title}</span>
+        </div>
+        <div class="apaga-card" onclick="apagaQuizzLocal(this)">
+            <img src="img/Vector.png">
+        </div>
+    </div>    
     `
     containerUserQuizz.innerHTML += templateUserQuizz
 }
