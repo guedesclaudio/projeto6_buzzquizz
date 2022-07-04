@@ -854,13 +854,27 @@ function checkUserQuizz() {
     }
 }
 checkUserQuizz()
-
+let card, tituloQuizz
 function apagaQuizzLocal(element) {
-    const card = element.parentNode
-    const tituloQuizz = card.querySelector("span").innerHTML
+    document.querySelector(".confirmacao").classList.toggle("hide")
+    document.querySelector(".fundo-branco").classList.remove("hide")
+    card = element.parentNode
+    tituloQuizz = card.querySelector("span").innerHTML
     console.log(card, tituloQuizz)
+    return card, tituloQuizz
+}
+
+function apagaQuizz() {
     card.remove()
     localStorage.removeItem(tituloQuizz);
+    document.querySelector(".confirmacao").classList.toggle("hide")
+    document.querySelector(".fundo-branco").classList.add("hide")
+    location.reload()
+}
+
+function desisteApagarQuizz() {
+    document.querySelector(".confirmacao").classList.toggle("hide")
+    document.querySelector(".fundo-branco").classList.add("hide")
 }
 
 function renderizaUserQuizz(quizzRetornado) {
