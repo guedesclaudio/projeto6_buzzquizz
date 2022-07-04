@@ -152,7 +152,9 @@ ion-icon {
     border-radius: 4px;
     box-sizing: content-box;
     position: relative;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%)
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%);
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .quizzCard img {
@@ -230,6 +232,11 @@ ion-icon {
     font-size: 23px;
     font-weight: 700;
     color: #FFFFFF;
+    
+}
+.Pergunta h3 {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .Resposta{
     display: flex;
@@ -256,6 +263,8 @@ ion-icon {
     height: 175px;
     margin-bottom: 10px;
     object-fit: contain;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .Resposta1:hover, .Resposta2:hover, .Resposta3:hover, .Resposta4:hover{
     filter: contrast(85%);
@@ -349,6 +358,49 @@ ion-icon {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.fundo-branco {
+    opacity: 0.7;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 49;
+}
+
+.confirmacao {
+    width: 300px;
+    height: 100px;
+    background: #EC362D;
+    position: fixed;
+    top: 500px;
+    z-index: 50;
+    border-radius: 3px;
+}
+
+.confirmacao h1{
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.confirmacao div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+}
+
+.confirmacao p {
+    cursor: pointer;
+}
+
+.confirmacao p:hover {
+    color: white;
 }
 
 /*INÍCIO CRIAÇÃO*/
@@ -598,6 +650,11 @@ ion-icon {
 
 @media(max-width: 1100px){
     /*INÍCIO HOME*/
+    
+    .confirmacao {
+        top: 300px;
+        width: 200px;
+    }
 
     .criarQuiz {
         margin-top: 95px;
