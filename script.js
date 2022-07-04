@@ -6,14 +6,16 @@
 /* 4° - Criação de quiz*/
 
 /*INÍCIO GLOBAIS*/
-
 let quizObjeto = {
 	title: "",
 	image: "",
 	questions:[],
 	levels:[]
 }
-
+let NmrDaQuestao
+let NumeroProximaQuestao
+let chave
+let contador = 50
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
 let RespostasArray= []
@@ -74,7 +76,11 @@ function refresh() {
 function comparador() { 
 	return Math.random() - 0.5; 
 }
-
+function TirarOHide(){
+    if(NumeroProximaQuestao !== indice){
+        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
+    }
+}
 /*INÍCIO HOME*/
 
 function toggleHome() {  // função pra fazer aparecer e sumir a Homepage
@@ -94,8 +100,8 @@ function ObterQuizzes(){
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
 //elemento.data[i] === quizzesArray[i]
 function ObterQuizzesSucesso(elemento){
-    for(i = 0; i < elemento.data.length; i++){
-        quizzesArray.push(elemento.data[i])
+    for(i = 49; i >= 0; i = i-1){
+        quizzesArray.unshift(elemento.data[i])
         const quizzCardtemplate = `
         <div class="quizzCard" id="${i}" onclick="goToQuizz(this)">
             <img src=${elemento.data[i].image}>
@@ -103,8 +109,6 @@ function ObterQuizzesSucesso(elemento){
         </div>`
         document.querySelector('.quizzCards').innerHTML += quizzCardtemplate
     }
-    
-
 }
 ObterQuizzes()
 /*FIM HOME*/
@@ -116,6 +120,10 @@ ObterQuizzes()
 function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e renderizar as perguntas, as respostas e o banner no topo do quiz
     //a função também serve para pegar o id do quiz
     // quizz.id === i
+    if(document.querySelector('.quiz').classList.contains('ResultadoCriado')){
+        document.querySelector('.quiz').classList.remove('ResultadoCriado')
+    }
+    QuantidadeAcertos = 0
     NumeroId = quizz.id
     RespostasArray = []
     quizzid = quizzesArray[quizz.id]
@@ -174,16 +182,18 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
     document.querySelector('.ImgTopoQuiz').scrollIntoView({behavior: "smooth", block:'center'})
     document.querySelector('.nmrquestao0').classList.remove('hide')
 }
+
 //função para selecionar resposta e esbranquiçar as outras
 //e para verificar se a resposta ta certa ou errada
 function VerificarResposta(elemento){ //verificar jeito melhor de fazer
     ClasseNumeroDaQuestao = elemento.parentNode.parentNode.classList[1]
-    let NmrDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
-    NmrDaQuestao = Number(NmrDaQuestao)
-    let NumeroProximaQuestao = NmrDaQuestao + 1
-    if(NumeroProximaQuestao !== indice){
-        document.querySelector('.nmrquestao'+NumeroProximaQuestao).classList.remove('hide')
+    if(document.querySelector('.'+ClasseNumeroDaQuestao).classList.contains('errou')){
+        return
     }
+    NmrDaQuestao = ClasseNumeroDaQuestao[ClasseNumeroDaQuestao.length-1]
+    NmrDaQuestao = Number(NmrDaQuestao)
+    NumeroProximaQuestao = NmrDaQuestao + 1
+    setTimeout(TirarOHide,2000)
     if(elemento.classList.contains('esbranquicado') === false){
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta1').classList.add('esbranquicado')
         document.querySelector('.'+ClasseNumeroDaQuestao +' .Resposta2').classList.add('esbranquicado')
@@ -231,17 +241,12 @@ function VerificarResposta(elemento){ //verificar jeito melhor de fazer
         return
     }
     proximoelemento = document.querySelector('.questao'+proximonumero)
-
     setTimeout(scroll, 2000)
 }
-
-
-//faltando resolver erro quando clica no botao reiniciar
-//renderizar dinamicamente o nivel
-//pegar a cor do background da pergunta no objeto dos quizzes
-
-
 function ResultadoQuiz(){
+    if(document.querySelector('.quiz').classList.contains('ResultadoCriado')){
+        return
+    }
     let NivelAcertos = 0
     NivelAcertos = Number(NivelAcertos)
     let PorcentagemAcertos = (QuantidadeAcertos * 100)/indice
@@ -253,7 +258,7 @@ function ResultadoQuiz(){
     }
     PorcentagemAcertos = PorcentagemAcertos.toFixed(0)
     document.querySelector('.quiz').innerHTML += `
-        <div class="Resultado criado">
+        <div class="Resultado">
             <div class="tituloResultado">${PorcentagemAcertos}% de acertos: ${quizzid.levels[NivelAcertos].title}</div>
             <div class="textoResultado">
                 <img class="imgresultado" src="${quizzid.levels[NivelAcertos].image}" alt="">
@@ -264,6 +269,7 @@ function ResultadoQuiz(){
                 <div class="btnVoltarHome" onclick="refresh()">Voltar pra home</div>
             </div>
         </div>`
+    document.querySelector('.quiz').classList.add('ResultadoCriado')
         scrollResultado()
 }
 function scroll (){
@@ -815,15 +821,20 @@ function pegaDadosLocal() {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
     containerUserQuizz.innerHTML = ""
     for (let i = 0; i < localStorage.length; i++) {
-        const chave = localStorage.key(i)
+        chave = localStorage.key(i)
+        const QuizzObjetoSerializado = localStorage.getItem(chave)
+        const quizzObjetoDeserializado = JSON.parse(QuizzObjetoSerializado)
+        quizzesArray.push(quizzObjetoDeserializado)
         const conteudoQuizz = localStorage[chave]
         const quizzRetornado = JSON.parse(conteudoQuizz)
+        console.log(chave)
         //console.log(quizzRetornado)
         renderizaUserQuizz(quizzRetornado)
+        contador++
     }
 }
 pegaDadosLocal()
-setInterval(pegaDadosLocal, 2000)
+//setInterval(pegaDadosLocal, 2000)
 
 
 function checkUserQuizz() {
@@ -844,14 +855,13 @@ function apagaQuizzLocal(tituloQuizz) {
 function renderizaUserQuizz(quizzRetornado) {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
     const templateUserQuizz = `
-    <div class="quizzCard" id="15" onclick="goToQuizz(this)">
+    <div class="quizzCard" id="${contador}" onclick="goToQuizz(this)">
         <img src=${quizzRetornado.image}>
         <span>${quizzRetornado.title}</span>
     </div>
     `
     containerUserQuizz.innerHTML += templateUserQuizz
 }
-
 
 function avisaPorcentagemNivel() {
     alert("Nesse nível a % mínima de acerto é 0")

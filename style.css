@@ -235,7 +235,7 @@ ion-icon {
     width: 330px;
     height: 175px;
     margin-bottom: 10px;
-    object-fit: cover;
+    object-fit: contain;
 }
 .Resposta1:hover, .Resposta2:hover, .Resposta3:hover, .Resposta4:hover{
     filter: contrast(85%);
