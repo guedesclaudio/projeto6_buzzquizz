@@ -6,9 +6,8 @@
 /* 4° - Criação de quiz*/
 
 /*INÍCIO GLOBAIS*/
-//metodo do id n ta funcionando pq quando a pagina reinicia o quizobjeto fica vazio
-//tem q achar um jeito de pegar o objeto do local storage para dar push no quizzesarray com id 50 
-//todos id 50+ sao do usuario
+//comentei a função setInterval(pegaDadosLocal, 2000) na linha 832, pq dava erro no console, tem algum problema?
+//-lucas
 let quizObjeto = {
 	title: "",
 	image: "",
@@ -16,6 +15,7 @@ let quizObjeto = {
 	levels:[]
 }
 let chave
+let contador = 50
 console.log(localStorage)
 let DOM_home = document.querySelector(".home").innerHTML
 let quizzesArray = []
@@ -97,8 +97,8 @@ function ObterQuizzes(){
 //função para renderizar os quizzes e criar uma array com todos os objetos dos quizzes
 //elemento.data[i] === quizzesArray[i]
 function ObterQuizzesSucesso(elemento){
-    for(i = 0; i < elemento.data.length; i++){
-        quizzesArray.push(elemento.data[i])
+    for(i = 49; i >= 0; i = i-1){
+        quizzesArray.unshift(elemento.data[i])
         const quizzCardtemplate = `
         <div class="quizzCard" id="${i}" onclick="goToQuizz(this)">
             <img src=${elemento.data[i].image}>
@@ -106,9 +106,6 @@ function ObterQuizzesSucesso(elemento){
         </div>`
         document.querySelector('.quizzCards').innerHTML += quizzCardtemplate
     }
-    const QuizzObjetoSerializado = localStorage.getItem(chave)
-    const quizzObjetoDeserializado = JSON.parse(QuizzObjetoSerializado)
-    quizzesArray.push(quizzObjetoDeserializado)
 }
 ObterQuizzes()
 /*FIM HOME*/
@@ -809,7 +806,7 @@ function validaUrlInicio() {
 
 //ARMAZENANDO, PEGANDO  e APAGANDO DADOS DO LOCAL STORAGE
 function armazenaDadosLocal() {
-    let key = 'bolinha'
+    let key = quizObjeto.title
     const myQuizz = quizObjeto
     console.log(quizObjeto)
     const myQuizzSerializado = JSON.stringify(myQuizz)
@@ -821,11 +818,15 @@ function pegaDadosLocal() {
     containerUserQuizz.innerHTML = ""
     for (let i = 0; i < localStorage.length; i++) {
         chave = localStorage.key(i)
+        const QuizzObjetoSerializado = localStorage.getItem(chave)
+        const quizzObjetoDeserializado = JSON.parse(QuizzObjetoSerializado)
+        quizzesArray.push(quizzObjetoDeserializado)
         const conteudoQuizz = localStorage[chave]
         const quizzRetornado = JSON.parse(conteudoQuizz)
         console.log(chave)
         //console.log(quizzRetornado)
         renderizaUserQuizz(quizzRetornado)
+        contador++
     }
 }
 pegaDadosLocal()
@@ -849,17 +850,14 @@ function apagaQuizzLocal(tituloQuizz) {
 
 function renderizaUserQuizz(quizzRetornado) {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
-    //for(let contador = 50 ; contador < )
     const templateUserQuizz = `
-    <div class="quizzCard" id="50" onclick="goToQuizz(this)">
+    <div class="quizzCard" id="${contador}" onclick="goToQuizz(this)">
         <img src=${quizzRetornado.image}>
         <span>${quizzRetornado.title}</span>
     </div>
     `
     containerUserQuizz.innerHTML += templateUserQuizz
-    
 }
-
 
 function avisaPorcentagemNivel() {
     alert("Nesse nível a % mínima de acerto é 0")
