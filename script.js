@@ -151,7 +151,7 @@ function goToQuizz(quizz) { // função pra limpar a home e abrir o quiz e rende
         RespostasArray[indice].sort(comparador)
         document.querySelector('.quiz').innerHTML += `
             <div class="QeAQuiz nmrquestao${indice} hide">
-                <div class="Pergunta">
+                <div style="background-color: ${quizzid.questions[indice].color};" class="Pergunta" >
                     <h3>${quizzid.questions[indice].title}</h3>
                 </div>
                 <div class="Resposta questao${indice}">
