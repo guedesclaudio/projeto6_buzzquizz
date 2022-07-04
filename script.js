@@ -786,7 +786,7 @@ function validaTudoNiveis(icone) {
             let promise = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizObjeto)
             armazenaDadosLocal()
             goToSucessoCriar()
-            //quizzesArray.push(quizObjeto)
+            quizzesArray.push(quizObjeto)
         }
        
         
@@ -844,7 +844,7 @@ function apagaQuizzLocal(tituloQuizz) {
 function renderizaUserQuizz(quizzRetornado) {
     const containerUserQuizz = document.querySelector(".quizzCardsUser")
     const templateUserQuizz = `
-    <div class="quizzCard" id="50" onclick="goToQuizz(this)">
+    <div class="quizzCard" id="15" onclick="goToQuizz(this)">
         <img src=${quizzRetornado.image}>
         <span>${quizzRetornado.title}</span>
     </div>
